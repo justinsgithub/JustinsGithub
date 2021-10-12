@@ -1,0 +1,33 @@
+# SpaceVim Hints
+
+
+# \ NUMBER = jumps to NUMBER tab
+# SPC s c = toggle search_highlight_persist
+# SPC t h i =toggle highlight indentation levels
+# s t = opens new tab
+# s v = opens window below
+# s g = opens window to the right
+# SPC WINDOWNUMBER = jumps to WINDOWNUMBER
+
+
+
+# SPC t t tab manager window
+
+# SPC T m       toggle menu bar
+# SPC T t       toggle tool bar
+
+# SPC b N h     create new empty buffer in a new window on the left
+# SPC b N j     create new empty buffer in a new window at the bottom
+# SPC b N k     create new empty buffer in a new window above
+# SPC b N l     create new empty buffer in a new window below
+# SPC b N n     create new empty buffer in current window
+
+# SPC f /       Find files with find or fd command
+# SPC f b       go to file bookmarks
+
+
+# SPC f f       open file
+# SPC f s       save a file
+# SPC f a       save as new file name
+# SPC f S       save all files
+# SPC f r       open a recent file
