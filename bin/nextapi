@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo 'enter new next api name > '
+
+read scriptName
+
+touch ~/bin/"$scriptName.js"
+
+cat ~/bin/nextapitemplate >> ~/bin/"$scriptName.js"
+
+nvim ~/bin/"$scriptName.js"
