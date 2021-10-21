@@ -1,1 +1,0 @@
-/home/justin/.bash_profile
