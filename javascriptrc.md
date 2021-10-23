@@ -5,7 +5,6 @@
 ## Global Variables
 var 
 
-
 ### dom 
 
 - doc = document,
@@ -35,13 +34,24 @@ var
 
 
 
-### functions
+## Global functions
 
-f = function,
+- function listen(element, newevent, listenfunction){
+	element.addEventListener(newevent, listenfunction)	
+}
 
+function addClick(element, clickfunction){
+	listen(element, 'click', clickfunction)
+}
 
-let myHeader = getId('myHeader'),
-headerText = 'welcome to my site'
+function
+
+f newShortcut(element, shortcutKey){
+// IE, Chrome, Safari, Opera 15+: [ALT] + accesskey
+//Opera prior version 15: [SHIFT] [ESC] + accesskey
+//Firefox: [ALT] [SHIFT] + accesskey
+    element.accessKey = shortcutKey;
+}
 
 f addText(element, text){
     element.textContent = text
