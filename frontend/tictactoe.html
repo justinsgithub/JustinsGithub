@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 64px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 64px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+margin-top: 50px;
+margin-left: 25%;
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+
+</style>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+</head>
+<body>
+
+<div id="root">
+	<div class="game" id='game'>
+    	<div class="game-board">
+ 	     	<div class="board-row">
+    			<button class="square" id="1" onclick=handleClick("1")></button>
+				<button class="square" id="2" onclick=handleClick("2")></button>
+				<button class="square" id="3" onclick=handleClick("3")></button>
+			</div>
+			
+            <div id="board-row">
+    			<button class="square" id="4" onclick=handleClick("4")></button>
+				<button class="square" id="5" onclick=handleClick("5")></button>
+				<button class="square" id="6" onclick=handleClick("6")></button>
+ 	     	</div>
+            
+            <div id="board-row">
+    			<button class="square" id="7" onclick=handleClick("7")></button>
+				<button class="square" id="8" onclick=handleClick("8")></button>
+				<button class="square" id="9" onclick=handleClick("9")></button>
+			</div>
+    	</div>
+    </div>
+</div>
+
+<script>
+
+window.addEventListener('mousedown', function(e) {
+  document.body.classList.add('mouse-navigation');
+  document.body.classList.remove('kbd-navigation');
+});
+window.addEventListener('keydown', function(e) {
+  if (e.keyCode === 9) {
+    document.body.classList.add('kbd-navigation');
+    document.body.classList.remove('mouse-navigation');
+  }
+});
+window.addEventListener('click', function(e) {
+  if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
+    e.preventDefault();
+  }
+});
+window.onerror = function(message, source, line, col, error) {
+  var text = error ? error.stack || error : message + ' (at ' + source + ':' + line + ':' + col + ')';
+  errors.textContent += text + '\n';
+  errors.style.display = '';
+};
+console.error = (function(old) {
+  return function error() {
+    errors.textContent += Array.prototype.slice.call(arguments).join(' ') + '\n';
+    errors.style.display = '';
+    old.apply(this, arguments);
+  }
+})(console.error);
+
+
+let playerShape = 'X'
+let computerShape = 'O'
+let playersTurn = true
+let totalMoves = 0
+let winner = false
+ 
+var root = document.getElementById('root')
+var game = document.getElementById('game')
+
+
+function showWinner(){
+h1 = document.createElement("h1")
+h1.textContent = "Winner"
+root.insertBefore(h1, game)
+}
+
+
+function gameOver(){
+h1 = document.createElement("h1")
+h1.textContent = "Game Over!"
+root.insertBefore(h1, game)
+}
+
+
+let moves = document.createElement("h1")
+let playerMoves = []
+let computerMoves = []
+
+function checkWinner(){
+	let square1 = document.getElementById('1').textContent
+	let square2 = document.getElementById('2').textContent
+	let square3 = document.getElementById('3').textContent
+	let square4 = document.getElementById('4').textContent
+	let square5 = document.getElementById('5').textContent
+	let square6 = document.getElementById('6').textContent
+	let square7 = document.getElementById('7').textContent
+	let square8 = document.getElementById('8').textContent
+    let square9 = document.getElementById('9').textContent
+	const winningCombos = [
+		[square1,square2,square3],
+    	[square4,square5,square6],
+    	[square7,square8,square9],
+    	
+    	[square1,square4,square7],
+    	[square2,square5,square8],
+    	[square3,square6,square9],
+    
+    	[square1,square5,square9],
+    	[square3,square5,square7]
+	]
+    function checkMatch(value, index, array) {
+    		if(array[index][0] != playerShape && array[index][0] != computerShape){return}  
+            
+    		if(array[index][0] === array[index][1] && array[index][0] === array[index][2]) {
+            winner = true
+            showWinner()
+            }
+    }
+    winningCombos.forEach(checkMatch)
+
+console.log('winner') 
+}
+
+function showMoves(){
+	let square1 = document.getElementById('1').textContent
+	let movesText = 'Total Moves: ' + totalMoves.toString() + '\n'
+    let playerMovesText = `\n Player move locations: ` + playerMoves.toString()
+	moves.textContent = movesText + playerMovesText 
+	root.insertBefore(moves, game)
+}
+
+showMoves()
+
+
+
+
+
+function handleClick(id){
+	let chosenSquare = document.getElementById(id)
+
+	if (chosenSquare.textContent === 'X' || chosenSquare.textContent === 'O') {return}
+	if ( totalMoves === 9 ) {return}
+    if (winner === true){return}
+	totalMoves += 1  
+    
+    if (totalMoves >= 5) {
+    	checkWinner()
+    }
+ 
+    
+    
+    
+    	if (playersTurn === true) {
+			chosenSquare.textContent = playerShape
+        	playerMoves.push(id)
+        	playersTurn = false
+               }
+    	else {
+    		chosenSquare.textContent = computerShape
+        	computerMoves.push(id)
+        	playersTurn = true        
+         	}    
+    	if (totalMoves === 9){
+    		gameOver()
+    	}
+        
+        showMoves()
+}
+
+/*
+document.getElementById("myP1").addEventListener("click", function() {
+  alert("You clicked the white element!");
+}, false);
+
+document.getElementById("myDiv1").addEventListener("click", function() {
+  alert("You clicked the orange element!");
+}, false);
+
+document.getElementById("myP2").addEventListener("click", function() {
+  alert("You clicked the white element!");
+}, true);
+
+document.getElementById("myDiv2").addEventListener("click", function() {
+  alert("You clicked the orange element!");
+}, true);
+*/
+</script>
+
+</body>
+</html>
