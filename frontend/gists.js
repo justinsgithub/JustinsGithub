@@ -1,3 +1,22 @@
+<h2>JavaScript Array.forEach()</h2>
+<p>Calls a function once for each array element.</p>
+
+<p id="demo"></p>
+
+<script>
+const numbers = [45, 4, 9, 16, 25];
+
+let txt = "";
+
+numbers.forEach(myFunction);
+
+document.getElementById("demo").innerHTML = txt;
+
+function myFunction(value, index, array) {
+	txt += value +  " is the value at index " + index + " ( which is the first item of the array )" + "<br> "; 
+}
+</script>
+
 
 /*
 function createSquares(){
