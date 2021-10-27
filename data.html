@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="EN">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Data</title>
+  <link rel="stylesheet" href="/stylesheets/data.css">
+  <link rel="stylesheet" href="/stylesheets/primitive.css">
+</head>
+
+<body>
+	<header>
+	<h1>Data</h1>
+	<div class="topnav" id="myTopnav">
+		<a href="index.html">Dashboard</a>
+  <a href="#data" class="active">Data</a>
+  <a href="programs.html">Programs</a>
+  <a href="javascript:void(0);" class="icon" onclick="navbar()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+	</header>
+	<main>
+		<h2 id="fetlifeprograms">Fetlife</h2>
+		<button id="updatestatsbutton"  type="button" onclick="updateStats()">Update Stats</button>
+		<h3 id="updatestats"></h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Category</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Following</td>
+					<td id="following"></td>
+				</tr>
+				<tr>
+					<td>Friends</td>
+					<td id="friends"></td>
+				</tr>
+				<tr>
+					<td>Followers</td>
+					<td id="followers"></td>
+				</tr>
+				</tbody>
+		<hr />
+		
+	</main>
+	<script src="javascripts/data.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>My Notes</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
+    <link href="stylesheets/productsapi.css" rel="stylesheet" />
+    <link href="stylesheets/modal.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div id="allproducts"></div>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Add New Note</h2>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <form action="/api/notes" id="example-form">
+	<label for="name">
+		<strong>note title</strong>
+		<input type="text" name="name" id="name">
+  </label>
+
+	<label for="description">
+		Description 
+		<input type="text" name="description" id="description">
+	</label>
+
+    <div class="modal-footer">
+	<input class="modalButton" type="submit" value="Save note">
+    </div>
+</form>
+    </div>
+      <!--     <button class="modalButton" onclick="saveProduct()">Save Product</button>-->
+  </div>
+</div>
+
+    <script src="javascripts/notesapi.js"></script>
+  </body>
+
+</html>
