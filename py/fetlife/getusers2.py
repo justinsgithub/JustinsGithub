@@ -12,7 +12,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 
 password = 'Ilovelemon93'
-username = 'lemonjewell@yahoo.com'
+username = 'jewell@justintylers.com'
 url = 'https://fetlife.com/users/sign_in'
 usernameForm = '/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[1]/div/div/input'
 passwordForm = '/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[2]/div/div/input'
@@ -41,23 +41,21 @@ print('clicked login')
 places = browser.find_element(By.XPATH, placesLink)
 places.click()
 print('clicked places')
+sleep(2)
 
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'California'))).click()
-print('clicked on California')
+WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'New York City'))).click()
+print('clicked on New York City')
+sleep(2)
 
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href$="california/related"]'))).click()
-print('clicked on cities within')
-
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Los Angeles'))).click()
-print('clicked on Los Angeles')
 
 WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href$="/kinksters"]'))).click()
 print('clicked on kinsters')
+sleep(2)
 
-db = "Database/Fetlife/Users/California/LA/Tofollow/"
-for x in range(2, 200):
+
+for pageNumber in [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50]:
     selectorStart = 'a[href$="/kinksters?page={}"]'
-    selector = selectorStart.format(x) 
+    selector = selectorStart.format(pageNumber) 
     print(selector)
     WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector))).click()
     print('clicked on next page link')
@@ -65,12 +63,15 @@ for x in range(2, 200):
     print('found all user links')
     userNames = [userLink.text for userLink in userLinks]
     print('found all usernames')
-    userNamesFile = open(db + format(x), "a")
-    totalUsersFile = open(db + "allusers", "a")
+    userDB = 'Database/Fetlife/Users/'
+    pageNumberString = format(pageNumber)
+    usersToFollowTable = userDB + pageNumberString
+    usersToFollow = open(usersToFollowTable, "a")
+    allUsersToFollow = open("Database/Fetlife/Users/alluserstofollow", "a")
     print('opened file to write users')
     for userName in userNames:
-        userNamesFile.write(userName + "\n")
-        totalUsersFile.write(userName + "\n")
-    userNamesFile.close()
-    totalUsersFile.close()
+        usersToFollow.write(userName + "\n")
+        allUsersToFollow.write(userName + "\n")
+    usersToFollow.close()
+    allUsersToFollow.close()
     print('closed file')

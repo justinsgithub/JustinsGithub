@@ -10,6 +10,13 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import StaleElementReferenceException
 
 
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+fetlife = myclient["fetlife"]
+
+
+
 
 password = 'Ilovelemon93'
 username = 'lemonjewell@yahoo.com'
@@ -36,26 +43,27 @@ login_btn = browser.find_element(By.XPATH, loginButton)
 login_btn.click()
 print('clicked login')
 
-
+state = 'Washington'
 
 places = browser.find_element(By.XPATH, placesLink)
 places.click()
 print('clicked places')
 
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'California'))).click()
-print('clicked on California')
+WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Washington'))).click()
+print('clicked on Washington')
 
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href$="california/related"]'))).click()
+WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href$="washington/related"]'))).click()
 print('clicked on cities within')
 
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Los Angeles'))).click()
-print('clicked on Los Angeles')
+WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Seattle'))).click()
+print('clicked on Seattle')
 
 WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href$="/kinksters"]'))).click()
 print('clicked on kinsters')
 
-db = "Database/Fetlife/Users/California/LA/Tofollow/"
-for x in range(2, 200):
+seattleUsers = fetlife["seattleUsers"]
+
+for x in range(2, 1000):
     selectorStart = 'a[href$="/kinksters?page={}"]'
     selector = selectorStart.format(x) 
     print(selector)
@@ -65,12 +73,6 @@ for x in range(2, 200):
     print('found all user links')
     userNames = [userLink.text for userLink in userLinks]
     print('found all usernames')
-    userNamesFile = open(db + format(x), "a")
-    totalUsersFile = open(db + "allusers", "a")
-    print('opened file to write users')
     for userName in userNames:
-        userNamesFile.write(userName + "\n")
-        totalUsersFile.write(userName + "\n")
-    userNamesFile.close()
-    totalUsersFile.close()
-    print('closed file')
+        newUserName = {"userName": userName}
+        seattleUsers.insert_one(newUserName)

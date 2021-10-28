@@ -9,6 +9,30 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import StaleElementReferenceException
 
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+fetlife = myclient["fetlife"]
+databaseList = myclient.list_database_names()
+
+#states = [
+#  { "name": "followers", "amount": 341},
+#  { "category": "friends", "amount": 658},
+#  { "category": "following", "amount": 3414},
+#]
+
+
+#x = fetLifeStats.insert_many(states)
+
+#print list of the _id values of the inserted documents:
+#print(x.inserted_ids)
+
+#for stat in fetLifeStats.find():
+# print(stat)
+
+#for stat  in fetLifeStats.find({},{ "category": 0 }):
+#    print(stat)
+
 
 
 password = 'Ilovelemon93'
@@ -28,49 +52,26 @@ browser = webdriver.Chrome('/home/jewell/bin/chromedriver')  # Optional argument
 browser.get(url)
 email_in = browser.find_element(By.XPATH, usernameForm)
 email_in.send_keys(username)
-print('entered email')
 pw_in = browser.find_element(By.XPATH, passwordForm)
 pw_in.send_keys(password)
-print('entered pword')
 login_btn = browser.find_element(By.XPATH, loginButton)
 login_btn.click()
-print('clicked login')
+sleep(1)
 
 
 
 places = browser.find_element(By.XPATH, placesLink)
 places.click()
-print('clicked places')
+sleep(1)
 
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'California'))).click()
-print('clicked on California')
 
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href$="california/related"]'))).click()
-print('clicked on cities within')
+fetlifeStates = fetlife["states"]
 
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.LINK_TEXT, 'Los Angeles'))).click()
-print('clicked on Los Angeles')
-
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href$="/kinksters"]'))).click()
-print('clicked on kinsters')
-
-db = "Database/Fetlife/Users/California/LA/Tofollow/"
-for x in range(2, 200):
-    selectorStart = 'a[href$="/kinksters?page={}"]'
-    selector = selectorStart.format(x) 
-    print(selector)
-    WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector))).click()
-    print('clicked on next page link')
-    userLinks = browser.find_elements(By.CSS_SELECTOR, 'a[href^="/users/"][class~="mr1"]')
-    print('found all user links')
-    userNames = [userLink.text for userLink in userLinks]
-    print('found all usernames')
-    userNamesFile = open(db + format(x), "a")
-    totalUsersFile = open(db + "allusers", "a")
-    print('opened file to write users')
-    for userName in userNames:
-        userNamesFile.write(userName + "\n")
-        totalUsersFile.write(userName + "\n")
-    userNamesFile.close()
-    totalUsersFile.close()
-    print('closed file')
+userLinks = browser.find_elements(By.CSS_SELECTOR, 'a[href^="/p/united-states/"]')
+print('found all place links')
+states = [userLink.text for userLink in userLinks]
+print('found all states')
+print(len(states))
+for state in states:
+    newState = {"name": state}
+    fetlifeStates.insert_one(newState)
