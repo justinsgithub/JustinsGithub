@@ -1,0 +1,289 @@
+# Vim / SpaceVim Hints
+
+## Text Editing
+
+> " :%s/baby-girl/little-slut/g ( on every line, find every instance of good-girl and replace it with bad-girl) 
+
+> " :%s/good-girl/bad-girl/ ( on every line, replace only the first instance of good-girl with bad-girl ) ( I don't think i have ever used it without the g )
+
+> " :g/^\s*$/d ( delete all blank lines in file ) 
+
+> " :g/^/pu =\"\n\" ( double space the file )
+
+> " :g/Little-Lemon/t$ ( copy all lines matching with the word "Little-Lemon" to end of the file ) 
+
+> " :g/Little-Lemon/m$ ( move all lines matching with the word "Little-Lemon" to end of the file )
+
+> " :g/^/m0 ( reverse a file )
+
+> " :g/^Little-Lemon/s/$/mytext ( put "mytext" at the end of every line containing the word "Little-Lemon" )
+
+> " :g/Little-Lemon/d ( delete all lines containing the word "Little-Lemon" )
+
+> "    :2,8co15  ( copy lines 6 through 9 after line 69 )
+
+> "    :4,15t$   ( copy lines 69 through 96 to end of document (t == co) )
+
+> "    :-t$      ( copy previous line to end of document )
+
+> "    :m0       ( move current line to line 0 (i.e. the top of the document )
+
+> "    :.,+3m$-1 ( current line through current+3 are moved to the lastLine-1 (i.e. next to last) )
+
+> "    :v/./,/./-j ( if there is more than one blank line, turn it into 2 blank lines )
+
+## General Usage / Navigation
+
+> " h	move cursor left
+
+> " j	move cursor down
+
+> " k	move cursor up
+
+> " l	move cursor right
+
+> " <Up>, <Down>	Smart up and down
+
+> " H	move cursor to the top of the screen
+
+> " L	move cursor to the bottom of the screen
+
+> " <	Indent to left and re-select
+
+> " >	Indent to right and re-select
+
+> " }	paragraphs forward
+
+> " {	paragraphs backward
+
+> " Ctrl-f / Shift-Down / <PageDown>	Smooth scrolling forwards
+
+> " Ctrl-b / Shift-Up / <PageUp>	Smooth scrolling backwards
+
+> " Ctrl-d	Smooth scrolling downwards
+
+> " Ctrl-u	Smooth scrolling upwards
+
+> " Ctrl-e	Smart scroll down (3 Ctrl-e/j)
+
+> " Ctrl-y	Smart scroll up (3Ctrl-y/k)
+
+> " <F3> / SPC f t	Toggle file explorer
+
+## Window Manager
+
+> " WIN is the s key 
+
+> " q	Smart buffer close
+
+> " WIN v	:split
+
+> " WIN V	Split with previous buffer
+
+> " WIN g	:vsplit
+
+> " WIN G	Vertically split with previous buffer
+
+> " WIN t	Open new tab (:tabnew)
+
+> " WIN o	Close other windows (:only)
+
+> " WIN x	Remove buffer, leave blank window
+
+> " WIN q	Remove current buffer
+
+> " WIN Q	Close current buffer (:close)
+
+> " Shift-Tab	Switch to alternate window (switch back and forth)
+
+> " \ NUMBER = jumps to NUMBER tab
+
+> " SPC s c = toggle search_highlight_persist
+
+> " SPC t h i =toggle highlight indentation levels
+
+> " SPC WINDOWNUMBER = jumps to WINDOWNUMBER
+
+> " SPC t t tab manager window
+
+> " SPC T m       toggle menu bar
+
+> " SPC T t       toggle tool bar
+
+> " SPC b N h     create new empty buffer in a new window on the left
+
+> " SPC b N j     create new empty buffer in a new window at the bottom
+
+> " SPC b N k     create new empty buffer in a new window above
+
+> " SPC b N l     create new empty buffer in a new window below
+
+> " SPC b N n     create new empty buffer in current window
+
+> " SPC f /       Find files with find or fd command
+
+> " SPC f b       go to file bookmarks
+
+> " SPC f f       open file
+
+> " SPC f s       save a file
+
+> " SPC f a       save as new file name
+
+> " SPC f S       save all files
+
+> " SPC f r       open a recent file
+
+> " All SpaceVim options go below the [option] section
+
+[options]
+
+windows_leader = "s"
+
+default_indent = 4
+
+expand_tab = true
+
+search_highlight_persist = false
+
+automatic_update = true
+
+vimcompatible = false
+
+colorscheme = "SpaceVim"
+
+enable_language_specific_leader = true
+
+statusline_separator = "arrow"
+
+statusline_iseparator = "arrow"
+
+enable_tabline_filetype_icon = true
+
+enable_statusline_mode = true
+
+filemanager = "nerdtree"
+
+filetree_direction = "left"
+
+[[layers]]
+
+name = 'autocomplete'
+
+auto_completion_return_key_behavior = "complete"
+
+auto_completion_tab_key_behavior = "smart"
+
+[[layers]]
+
+name = 'colorscheme'
+
+[[layers]]
+
+name = 'lang#python'
+
+python_interpreter = '/usr/bin/python3'
+
+> " pip install --user pylint
+
+> " pip install --user yapf
+
+[[layers]]
+
+name = 'lang#javascript'
+
+> " npm install -g js-beautify
+
+> " npm install -g eslint-cli
+
+[[layers]]
+
+name = 'shell'
+
+default_position = 'top'
+
+default_height = 30
+
+[[layers]]
+
+name = "incsearch"
+
+[[layers]]
+
+name = 'fzf'
+
+[[layers]]
+
+name = 'edit'
+
+[[layers]]
+
+  name = 'autocomplete'
+
+  auto_completion_return_key_behavior = "complete"
+
+  auto_completion_tab_key_behavior = "smart"
+
+[[layers]]
+
+  name = "ui"
+
+  enable_sidebar = false
+
+  enable_scrollbar = false
+
+  enable_indentline = true
+
+  enable_cursorword = false
+
+  indentline_char = '|'
+
+  conceallevel = 0
+
+  concealcursor = ''
+
+  cursorword_delay = 50
+
+  cursorword_exclude_filetype = []
+
+  indentline_exclude_filetyps = []
+
+[[layers]]
+
+  name = 'shell'
+
+  default_position = 'bottom'
+
+  default_height = 30
+
+[[layers]]
+
+  name = "tools"
+
+[[layers]]
+
+  name = 'lang#python'
+
+  python_interpreter = '/usr/bin/python3'
+
+[[layers]]
+
+  name = "checkers"
+
+  lint_on_the_fly = true
+
+  lint_on_save =	true
+
+  show_cursor_error	= true
+
+[[layers]]
+
+  name = "ctrlspace"
+
+[[layers]]
+
+  name = "colorscheme"
+
+[[layers]]
+
+  name = "edit"

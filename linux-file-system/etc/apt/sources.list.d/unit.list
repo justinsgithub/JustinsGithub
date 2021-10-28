@@ -1,0 +1,3 @@
+deb https://packages.nginx.org/unit/ubuntu/ hirsute unit
+deb-src https://packages.nginx.org/unit/ubuntu/ hirsute unit
+
