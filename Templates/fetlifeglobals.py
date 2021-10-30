@@ -2,9 +2,9 @@
 #################### FET LIFE GLOBAL VARIABLES BEGIN ###########################
 ################################################################################
 
-password = 'Ilovelemon93'
-username = 'lemonjewell@yahoo.com'
-url = 'https://fetlife.com/users/sign_in'
+password = ''
+username = ''
+url = ''
 usernameForm = '/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[1]/div/div/input'
 passwordForm = '/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[2]/div/div/input'
 loginButton = '/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[2]/button'
