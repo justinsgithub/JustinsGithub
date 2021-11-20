@@ -1,0 +1,15 @@
+!! initial migration
+python3 manage.py migrate
+
+!! after creating a new model
+python3 manage.py makemigrations
+
+!! after making new migrations of a new model
+python3 manage.py migrate
+
+!! for admin dashboard at localhost:8000/admin
+!! register models with admin to edit in dashboard
+python3 manage.py createsuperuser
+
+# DIFFERENCE BETWEEN REST API AND RESTFUL API
+# check into modelviewset
