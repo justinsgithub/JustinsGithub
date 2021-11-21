@@ -13,6 +13,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # MY APPS
     'notesapi.apps.NotesapiConfig',
+    'api.apps.ApiConfig',
     'rest_framework',
     'corsheaders',
 ]
