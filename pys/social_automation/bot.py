@@ -1,42 +1,7 @@
 #!/bin/python3
 """social media automation tool"""
-import re
-import os
-from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as Ec
-from selenium.webdriver.support.ui import WebDriverWait as Wait
-
-my_selects = {
-    
-    "username_input":
-    "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[1]/div/div/input",
-    
-    "password_input":
-    "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[2]/div/div/input",
-    
-    "login_button":
-    "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[2]/button",
-    
-    "us_places":
-    "//main//div/a",
-    
-}
-
-my_variables = {
-    "url":
-    "https://fetlife.com/users/sign_in",
-    "username":
-    "lovedaddyj",
-    "password":
-    "Hockey1343!"
-}
-
-site_urls = {
-    "places" :"https://fetlife.com/p",
-    "us_places" :"https://fetlife.com/p/united-states"
-}
 
 driver = webdriver.Chrome()
 
@@ -48,7 +13,12 @@ def enter_text(selectme, txt):
 
 def clickit(selectme):
     el = driver.find_element(By.XPATH, selectme)
+    if not el:
+        txt = 'cannot find element'
+        print(txt)
+        return False
     el.click()
+    return True
 
 
 def gets_page(url):
@@ -57,37 +27,54 @@ def gets_page(url):
     return driver.title
 
 
-def finds_this(selectme, num: int):
-    if num == 1:
+def finds_this(selectme, isMany: bool):
+    if not isMany:
         print("finding element")
         el = driver.find_element(By.XPATH, selectme)
+        if not el:
+            txt = 'nothing found'
+            print(txt)
+            return False
         return el
 
-    if num == 2:
+    if isMany:
         print("finding list of elements")
         els = driver.find_elements(By.XPATH, selectme)
+        if not els:
+            txts = ['nothing', 'found']
+            print(txts)
+            return False
         return els
 
 
-def gets_text(selectme, num: int):
-    if num == 1:
+def gets_text(selectme, isMany: bool):
+    if not isMany:
         el = driver.find_element(By.XPATH, selectme)
+        if not el:
+            txt = 'nothing found'
+            return txt
         txt = el.text
         return txt
 
-    if num == 2:
+    if isMany:
         els = driver.find_elements(By.XPATH, selectme)
+        if not els:
+            txts = ['nothing', 'found']
+            return txts
         txts = [el.text for el in els]
         return txts
 
 
-def gets_link(selectme, getMany: bool):
-    if not getMany:
+def gets_link(selectme, isMany: bool):
+    if not isMany:
         el = driver.find_element(By.XPATH, selectme)
         link = el.get_attribute("href")
         return link
 
-    if getMany:
+    if isMany:
         els = driver.find_elements(By.XPATH, selectme)
-        links = [el.get_attribute("href") for el in els]
+        links = []
+        for el in els:
+            link = el.get_attribute("href")
+            links.append(link)
         return links
