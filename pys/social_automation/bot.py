@@ -9,13 +9,21 @@ from selenium.webdriver.support import expected_conditions as Ec
 from selenium.webdriver.support.ui import WebDriverWait as Wait
 
 my_selects = {
+    
     "username_input":
-    '/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[1]/div/div/input',
+    "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[1]/div/div/input",
+    
     "password_input":
-    '/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[2]/div/div/input',
+    "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[2]/div/div/input",
+    
     "login_button":
-    '/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[2]/button'
+    "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[2]/button",
+    
+    "us_places":
+    "//main//div/a",
+    
 }
+
 my_variables = {
     "url":
     "https://fetlife.com/users/sign_in",
@@ -23,6 +31,11 @@ my_variables = {
     "lovedaddyj",
     "password":
     "Hockey1343!"
+}
+
+site_urls = {
+    "places" :"https://fetlife.com/p",
+    "us_places" :"https://fetlife.com/p/united-states"
 }
 
 driver = webdriver.Chrome()
