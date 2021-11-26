@@ -1,0 +1,462 @@
+# old code from beginning project 
+> just incase as reference
+
+## db.py 
+
+import pymongo
+
+uri = "my-mongo-uri"
+cluster = pymongo.MongoClient(uri)
+
+test_db = cluster["test"]
+test_collection = test_db["test"]
+
+def delete_data(collection, thiskey, thisvalue, isMany: bool):
+    if isMany:
+        print("deleting all data")
+        collection.delete_many({thiskey: thisvalue})
+        print("succesfully deleted")
+
+    if not isMany:
+        print("deleting single data")
+        collection.delete_one({thiskey: thisvalue})
+        print("succesfully deleted")
+
+
+def insert_data(collection, data, isMany: bool):
+    if isMany:
+        print("inserting all data")
+        collection.insert_many(data)
+        print(data)
+
+    if not isMany:
+        print("inserting single data")
+        collection.insert_one(data)
+        print(data)
+
+
+def all_data(collection):
+    print("getting all data in collection")
+    search = collection.find({})
+
+    return search
+
+
+def query_data(collection, thiskey, thisvalue, isMany: bool):
+    if isMany:
+        print("getting all data in search")
+        search = collection.find({thiskey: thisvalue})
+
+        return search
+
+    if not isMany:
+        print("getting first data matching query")
+        search = collection.find_one({thiskey: thisvalue})
+        print(search["_id"])
+
+        return search
+
+
+def update_data(collection, thiskey, thisvalue, newkey, newvalue,
+                isMany: bool):
+    if isMany:
+        collection.update_many({thiskey: thisvalue},
+                               {"$set": {
+                                   newkey: newvalue
+                               }})
+        print("data updated")
+
+    if not isMany:
+        collection.update_one({thiskey: thisvalue},
+                              {"$set": {
+                                  newkey: newvalue
+                              }})
+        print("data updated")
+
+
+def count_data(collection):
+    data_count = collection.count_documents({})
+    print(data_count)
+    return data_count
+
+
+def increment_data(collection, querykey, queryvalue, incrementkey,
+                   incrementvalue: int, isMany: bool):
+    if isMany:
+        print("incrementing data in query")
+        collection.update_many({querykey: queryvalue},
+                               {"$inc": {
+                                   incrementkey: incrementvalue
+                               }})
+        print("data updated")
+
+    if not isMany:
+        print("incrementing data in query")
+        collection.update_one({querykey: queryvalue},
+                              {"$inc": {
+                                  incrementkey: incrementvalue
+                              }})
+        print("data updated")
+
+
+## follow.py 
+
+def follow_users():
+    max_follows = 350
+    session_follows = 0
+    all_users = all_data(users)
+    for user in all_users:
+        if session_follows >= max_follows:
+            print("max limit reached")
+            return
+        profile_url = user["profile_url"]
+        imFollowing = user["imFollowing"]
+        attemptedFollow = user["attemptedFollow"]
+
+        if not imFollowing and not attemptedFollow:
+            sleep(5)
+            try:
+                print("getting ", profile_url)
+                driver.get(profile_url)
+            except selenium.webdriver.com:
+                print(
+                    "could not get profile page, could be critical error, breaking now"
+                )
+                return
+            try:
+                follow = driver.find_element(By.XPATH, follow_selector)
+
+                if not follow:
+                    update_data(users, "profile_url", profile_url,
+                                "attemptedFollow", True, False)
+
+                if follow and follow.text == 'Follow':
+                    follow.click()
+                    update_data(users, "profile_url", profile_url,
+                                "imFollowing", True, False)
+                    this_id = user["_id"]
+                    print('now following user id: ', this_id)
+                    session_follows += 1
+
+            except NoSuchElementException:
+                print("no follow button found, moving to next iteration")
+
+
+
+## get_users.py
+
+from selenium.webdriver.common.by import By
+
+# https://fetlife.com/p/united-states/washington/kinksters
+
+def get_users():
+    us_states = all_data(locations)
+    for state in us_states:
+        user_pages = state[userUrl]
+
+        pages_scraped = state["scrapedPages"]
+        lastPage = state["lastPage"]
+        count = pages_scraped
+        count += 1
+
+        while count < lastPage:
+            sleep(5)
+            driver.get(user_pages + "?page=" + str(count))
+            user_profile_links = find_link(profile_link_selector, True)
+            user_names = find_text(profile_link_selector, True)
+            gender_span_text = find_text(gender_selector, True)
+            genders = []
+            for gender_text in gender_span_text:
+                get_first_word = re.split("\s", gender_text, 1)
+                first_word = get_first_word[0]
+                gender = re.sub("\D", "", first_word)
+                genders.append(gender)
+
+            user_ids = [
+                re.sub(base_user_url, "", profile_link)
+                for profile_link in user_profile_links
+            ]
+
+            for x in range(len(user_profile_links)):
+                profile_link = user_profile_links[x]
+                this_username = user_names[x]
+                user_id = user_ids[x]
+                gender = genders[x]
+                pictures_link = profile_link + "/pictures"
+
+                print(profile_link, user_id, this_username, gender)
+
+                insert_data(
+                    usersV2, {
+                        "_id": user_id,
+                        "state": state,
+                        "profile_link": profile_link,
+                        "pictures_link": pictures_link,
+                        "iFollow": False,
+                        "attemptedFollow": False,
+                        "username": username,
+                        "gender": gender,
+                        "numPics": 0,
+                        "triedLikePictures": False,
+                        "numLikedPictures": 0
+                    }, False)
+
+            increment_data(locations, "name", state, "scrapedPages", 1, False)
+            count += 1
+
+
+
+## love_pictures.py
+
+def love_picture(pic_page):
+    driver.get(pic_page)
+    sleep(3)
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    love_button = driver.find_element(By.XPATH, "//a[@title=\"Love\"]")
+    if not love_button:
+        return
+    if love_button.text != "Love":
+        return
+    driver.execute_script("arguments[0].click();", love_button)
+
+
+class UserPicturesPage(object):
+    def __init__(self):
+        sleep(3)
+        genders_span = driver.find_element(By.TAG_NAME, "span.fw7")
+        get_first_word = re.split("\s", genders_span.text, 1)
+        print(get_first_word)
+        first_word = get_first_word[0]
+        print(first_word)
+
+        pictures_href = driver.find_elements(
+            By.XPATH,
+            "//*[@id=\"main-content\"]/div/div[2]/div/main/div[2]/div//div//div//a"
+        )
+
+        num_pictures_span = driver.find_element(By.XPATH, pic_num_selector)
+        number_string = num_pictures_span.textself.
+        self.like_these_pics = []
+        self.found_pictures = False
+
+        if num_pictures_span:
+            self.pics_to_like = 0
+            number_of_pictures = re.sub("\D", "", number_string)
+            print(number_of_pictures)
+            number_of_pictures = int(number_of_pictures)
+            print(number_of_pictures)
+            self.pics_to_like = number_of_pictures
+            if number_of_pictures > 4:
+                self.pics_to_like = 4
+                print(self.pics_to_like)
+            if pictures_href:
+                picture_links = [
+                    el.get_attribute("href") for el in pictures_href
+                ]
+                self.found_pictures = True
+                for x in range(self.pics_to_like):
+                    self.like_these_pics.append(picture_links[x])
+
+        self.gender = re.sub("\d", "", first_word)
+        get_first_word = re.split("\s", genders_span.text, 1)
+        print(get_first_word)
+        first_word = get_first_word[0]
+        print(first_word)
+
+        print(self.gender)
+
+
+def find_this(selectme, isMany: bool):
+    if not isMany:
+        print("finding element")
+        el = driver.find_element(By.XPATH, selectme)
+        if not el:
+            txt = 'nothing found'
+            print(txt)
+            return False
+        return el
+
+    if isMany:
+        print("finding list of elements")
+        els = driver.find_elements(By.XPATH, selectme)
+        if not els:
+            txts = ['nothing', 'found']
+            print(txts)
+            return False
+        return els
+
+
+def find_text(selectme, isMany: bool):
+    if not isMany:
+        el = driver.find_element(By.XPATH, selectme)
+        if not el:
+            txt = 'nothing found'
+            return txt
+        txt = el.text
+        return txt
+
+    if isMany:
+        els = driver.find_elements(By.XPATH, selectme)
+        if not els:
+            txts = ['nothing', 'found']
+            return txts
+        txts = [el.text for el in els]
+        return txts
+
+
+def find_link(selectme, isMany: bool):
+    if not isMany:
+        el = driver.find_element(By.XPATH, selectme)
+        link = el.get_attribute("href")
+        return link
+
+    if isMany:
+        els = driver.find_elements(By.XPATH, selectme)
+        links = []
+        for el in els:
+            link = el.get_attribute("href")
+            links.append(link)
+        return links
+
+
+
+
+userUrl = "kinksterUrl"
+def love_pictures():
+    all_users = all_data(users)
+    for user in all_users:
+        print("starting next user")
+        profile_url = user["profile_url"]
+        pic_url = profile_url + "/pictures"
+        print("getting user pictures page")
+        driver.get(pic_url)
+        this_page = UserPicturesPage()
+        print(this_page.gender)
+        if this_page.found_pictures:
+            for picture in this_page.like_these_pics:
+                love_picture(picture)
+                update_data(users, "profile_url", profile_url,
+                            "lemonTriedLikePictures", True, False)
+
+
+## main.py 
+
+from selenium import webdriver
+driver = webdriver.Chrome()
+def enter_text(selectme, txt):
+    el = driver.find_element(By.XPATH, selectme)
+    el.send_keys(txt)
+
+def click_it(selectme):
+    el = driver.find_element(By.XPATH, selectme)
+    if not el:
+        txt = 'cannot find element'
+        print(txt)
+        return False
+    el.click()
+    return True
+def login(url,username,password,username_input,password_input,login_button) -> bool:
+    driver.maximize_window()
+    driver.get(url)
+    enter_text(username_input, username)
+    enter_text(password_input, password)
+    click_it(login_button)
+    return True
+
+
+## vars.py
+
+import pymongo
+username = "lovedaddyj"
+password = "Hockey1343!"
+uri = "mongodb+srv://justinaawd:YhsGDjkfojaq0fC5@online-presence-cluster.rdnj4.mongodb" \
+      ".net/site1?retryWrites=true&w=majority"
+cluster = pymongo.MongoClient(uri)
+db = cluster["site1"]
+usersV2 = db["usersV2"]
+users = db["users"]
+locations = db["locations"]
+
+us_url = "https://fetlife.com/p/united-states"
+us_url2 = "https://fetlife.com/p/united-states/"
+
+url = "https://fetlife.com/users/sign_in"
+username = "lovedaddyj"
+password = "Hockey1343!"
+
+lusername = "lovelittlelemon"
+lpassword = "Ilovelemon93"
+username_input = "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[" \
+                 "1]/div/div/input"
+password_input = "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[1]/div[" \
+                 "2]/div/div/input"
+
+places = "https://fetlife.com/p"
+
+us_places = "https://fetlife.com/p/united-states"
+
+login_button = "/html/body/div[3]/div/div[3]/div/main/div/div[1]/form/div[2]/button"
+
+follow_selector: str = '//div[@id="main-content"]//aside//div[@class="dn db-s"]/div[' \
+                       '2]//button'
+
+profile_link_selector = '//a[@class="link f5 fw7 secondary mr1"]'
+
+num_users_selector = '//*[@id="main-content"]/div/header/div/div[2]/a[2]/div/div/span'
+
+gender_selector = "//div[@id='main-content']//div//main//div//div//div//div//div//span[" \
+                  "@class='f6 fw7 gray-300']"
+
+pic_link_selector = '//*[@id="main-content"]//main//div[@class="flex flex-wrap nl1 ' \
+                    'nr1"]//div//a'
+
+base_user_url = "https://fetlife.com/users/"
+
+pic_num_selector = "//*[@id='main-content']//main//h3/span[@class='f6 gray']"
+
+err_selector = "//div[@id='dynamic-flash-container']"
+
+love_selector = "//main//a[@title='Love']"
+
+
+## pages.py 
+
+class UserPicturesPage(object):
+    def __init__(self):
+        sleep(3)
+        genders_span = driver.find_element(By.TAG_NAME, "span.fw7")
+        get_first_word = re.split("\s", genders_span.text, 1)
+        print(get_first_word)
+        first_word = get_first_word[0]
+        print(first_word)
+
+        pictures_href = driver.find_elements(
+            By.XPATH,
+            "//*[@id=\"main-content\"]/div/div[2]/div/main/div[2]/div//div//div//a"
+        )
+
+        num_pictures_span = driver.find_element(By.XPATH, pic_num_selector)
+        number_string = num_pictures_span.text
+        self.like_these_pics = []
+        self.found_pictures = False
+
+        if num_pictures_span:
+            self.pics_to_like = 0
+            number_of_pictures = re.sub("\D", "", number_string)
+            print(number_of_pictures)
+            number_of_pictures = int(number_of_pictures)
+            print(number_of_pictures)
+            self.pics_to_like = number_of_pictures
+            if number_of_pictures > 4:
+                self.pics_to_like = 4
+                print(self.pics_to_like)
+            if pictures_href:
+                picture_links = [
+                    el.get_attribute("href") for el in pictures_href
+                ]
+                self.found_pictures = True
+                for x in range(self.pics_to_like):
+                    self.like_these_pics.append(picture_links[x])
+
+        self.gender = re.sub("\d", "", first_word)
+        print(self.gender)
