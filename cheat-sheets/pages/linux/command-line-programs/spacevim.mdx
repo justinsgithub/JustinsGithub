@@ -1,0 +1,47 @@
+# SpaceVim
+
+> powerful out of the box Vim setup, feat. python support
+
+> commands may vary slightly for non-debian based systems
+## install 
+
+```shell
+
+cd ~/bin;
+wget -O 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz';
+tar -xvf nvim-linux64.tar.gz;
+echo 'alias nvim="~/bin/nvim-linux64/bin/nvim"' >> ~/.bashrc;
+echo 'alias vim="~/bin/nvim-linux64/bin/nvim"' >> ~/.bashrc;
+sudo apt install python3-pip python3-neovim python3-pynvim lua-nvim curl;
+curl -sLf https://spacevim.org/install.sh | bash;
+vim 
+```
+
+## setup for python
+
+> install packages
+
+- pip install --user pylint 
+- pip install --user yapf 
+- pip install --user isort 
+
+> edit ~/.SpaceVim.d/init.toml
+
+```toml
+[options]
+    colorscheme = "material"
+
+[[layers]]
+name = 'autocomplete'
+auto_completion_return_key_behavior = "complete"
+auto_completion_tab_key_behavior = "smart"
+
+[[layers]]
+name = 'shell'
+default_position = 'top'
+default_height = 30
+
+[[layers]]
+name = 'lang#python'
+python_interpreter = '/usr/bin/python3'
+```

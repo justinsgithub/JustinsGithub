@@ -1,0 +1,245 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# plain browser javascript
+
+## leave a comment
+
+```python
+#! /bin/env python3
+# This is a comment
+```
+
+## output to terminal 
+
+```python
+print('this will show on terminal screen')
+
+```
+
+## data types
+
+### string
+### int ( whole number )
+### float ( decimal number )
+
+## data structures
+
+### list
+### dictionary
+
+## operators 
+
+### \+
+### \-
+### \*
+### /
+### %
+### **
+
+## relational operators
+
+### `==`
+### `!=`
+### `>`
+### `<`
+### `>=`
+### `>=`
+
+## boolean operators
+
+### and
+### or
+### not
+
+## square a number
+
+```python
+print(2**2)
+```
+
+## get the remainder 
+
+```python
+print(15%3)
+```
+
+## add / concatenate strings
+
+```python
+print('hello ' + 'world')
+
+first_word = 'hello'
+second_word = 'world'
+
+print ( first_word + second_word )
+
+greeting = first_word
+
+greeting += ' '
+subject = second_word
+
+print(greeting + subject)
+
+greeting += (subject + '!')
+
+multi_line_string = '''
+I am a
+multi line
+string
+'''
+# initials
+print('             ')
+print(' JJJJJ    A  ')
+print('     J    A  ')
+print('     J   A A ')
+print(' J   J   AAA ')
+print('   J    A   A')
+
+```
+
+## use module 
+> password is a variable inside of a file called mysecrets.py in our current working directory
+```python 
+
+from datetime import datetime 
+current_time = datetime.now()
+print(current_time)
+
+```
+## use personal module 
+> password is a variable inside of a file called mysecrets.py in our current working directory
+```python 
+
+from mysecrets import password 
+print(password)
+
+```
+## booleans, control flow, comparison operators
+
+```python
+if 13 - 6 != (3 * 2) + 1:
+  print('true statement') # shows nothing
+
+if 13 - 6 == (3 * 2) + 1:
+  print('true statement') # shows
+
+if 13 - 6 != (3 * 2) + 1:
+  print('true statement') # shows nothing
+else:
+  print('false statement') # shows
+
+if 13 - 6 != (3 * 2) + 1:
+  print('false statement') # shows nothing
+else:
+  print('won\'t print "false statement" because the "if" condition is not true') # shows
+
+if  not(1 + 1  != 10):
+    print("1 +1 equals 10")
+elif 1 + 1 == 10:
+    print("2 equals 10")
+elif 10 - 10 + 10 == 10:
+    print("True")
+
+True or (3 + 4 == 7)    # True, no matter the second expression if True is the first expression 
+
+(4 == 'four') or True   # True, no matter the first expression if True is the second expression 
+
+(1 - 1 == 0) or False   # True
+
+(1 + 1 == 0) or False   # False, neither statement is True
+
+(2 < 0) or True         # True
+
+(2 > 0) and False         # False, using "and" if any statement is False, the evaluation is false
+
+(3 == 8) or (3 > 4)     # False
+
+13 - 6 != (3 * 2) + 1 # False, 7 IS equal to 7 
+
+13 - 6 == (3 * 2) + 1 # True
+
+(2 + 2 + 2 >= 6) and (-1 * -1 < 0) # False
+
+(2 + 2 + 2 >= 6) or (-1 * -1 < 0) # True
+
+(4 * 2 <= 8) and (7 - 1 == 6) # True
+
+not True == False # True
+
+not False == True # True
+
+not True == True # False
+
+not False == False # False
+
+not (True == False or True == True) # False
+```
+
+## lists
+
+```python
+list_methods = ['.remove()','.append()','.count()','.insert()','.pop()','.sort()']
+
+list_functions = ['range()','len()','sorted()']
+
+not_a_list = range(9)
+
+number_list = list(range(9))
+
+zero_to_seven = list(range(8))
+
+even_numbers = list(range(0,100,2))
+
+odd_numbers = list(range(1,100,2))
+
+count_by_tens = list(range(10,100,10))
+
+count_by_7 = list(range(3,867,7))
+
+amount_of_fours = count_by_7.count(4)
+
+relational_operators = ['==','!=','>','<','>=','<=']
+
+or_equal = relational_operators[4:]
+
+less_than_or_equal = relational_operators[-n:]
+
+equal_and_not_equal = relational_operators[:2]
+
+greater_and_less_than = relational_operators[2:4]
+
+boolean_operators = ['or','not','not']
+
+operator_names = ['plus', 'minus', 'multiply', 'divide', 'remainder of', 'power of']
+
+operators = ['+', '-', '*', '/', '%', '**']
+
+operator_tuple = ('+', '-', '*', '/', '%', '**')
+
+operators_with_names = list(zip(operator_names, operators))
+
+plus, minus, multiply, divide, remainder_of, power_of = operator_tuple
+
+tuple_single = ('single item',)
+
+boolean_operators.append('and')
+
+all_operators[-2].remove('not')
+
+all_operators = operators + boolean_operators + relational_operators 
+
+all_operators[-1][-1] == '>='
+
+alphabetical_order_booleans = sorted(boolean_operators)
+
+boolean_operators.sort() # ['and','not','or']
+
+boolean_operators.sort(reverse=True) # ['or','not','and']
+
+```
+
+## loops 
+
+```python
+pass
+```

@@ -1,0 +1,105 @@
+# Ubuntu webserver setup
+
+## install packages
+
+- sudo apt update
+- sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+
+## setup Postgres
+
+- sudo -u postgres psql
+- CREATE DATABASE projectdb;
+- CREATE USER usersname WITH PASSWORD 'userspassword';
+- ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+- ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+- ALTER ROLE myprojectuser SET timezone TO 'UTC';
+
+- GRANT ALL PRIVILEGES ON DATABASE projectdb TO usersname;
+- \q 
+
+## setup environment
+
+- sudo -H pip3 install --upgrade pip
+- sudo -H pip3 install virtualenv
+- mkdir ~/projectdir
+- cd ~/projectdir
+- virtualenv projectenv
+- source projectenv/bin/activate
+
+## set up django project
+
+- pip install django gunicorn psycopg2-binary
+- django-admin startproject djangoproject ~/projectdir
+
+- edit ~/myprojectdir/myproject/settings.py
+```python
+import os
+
+# The simplest case: just add the domain name(s) and IP addresses of your Django server
+# ALLOWED_HOSTS = [ 'example.com', '203.0.113.5']
+# To respond to 'example.com' and any subdomains, start the domain with a dot
+# ALLOWED_HOSTS = ['.example.com', '203.0.113.5']
+ALLOWED_HOSTS = ['localhost', 'lovelittlelemon.com']
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'projectdb',
+        'USER': 'usersname',
+        'PASSWORD': 'userspassword',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
+. . .
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+```
+
+- ~/projectdir/manage.py makemigrations
+- ~/projectdir/manage.py migrate
+- ~/projectdir/manage.py createsuperuser
+- ~/projectdir/manage.py collectstatic
+- sudo ufw allow 8000
+- deactivate
+
+## setup systemd with Gunicorn
+- sudo edit /etc/systemd/system/gunicorn.socket
+```sh
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+```
+- sudo edit /etc/systemd/system/gunicorn.service
+```sh
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=usersname
+Group=www-data
+WorkingDirectory=/home/sammy/projectdir
+ExecStart=/home/usersname/projectdir/projectenv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          djangoproject.wsgi:application
+```
+
+
+
+

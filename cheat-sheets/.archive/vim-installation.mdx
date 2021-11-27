@@ -1,0 +1,66 @@
+# Vim text-editor
+
+import Callout from 'nextra-theme-docs/callout'
+
+Vim is a highly efficient, powerful, & configurable text editor. Originates from the text editing program "vi".
+
+#### Install Vim from source
+*This is using a Debian-based Linux system, commands may vary by distribution*
+
+<Callout>
+if any error messages pop up after the "make" command, it is most-likely because we need to install packages that Vim depends on. The error message will tell us the package names we are missing. 
+</Callout>
+<Callout>
+run "sudo apt install" with the package names to fix the error. Then run the "make" command again, BEFORE RUNNING "sudo make install".
+</Callout>
+
+1. clone repository 
+
+- `git clone https://github.com/vim/vim.git`
+
+2. change into cloned repository directory 
+
+- `cd vim`
+
+3. make files for installation
+
+- `make`
+
+4. install Vim
+
+- `sudo make install` 
+
+### Command mode
+
+<Callout>
+the following snippets all start from "command mode", prefixed with **:**
+</Callout>
+**:**
+
+#### replace all instances of text on every line in file 
+- `%s/UNWANTED TEXT /NEW TEXT/g`
+
+#### replace only the first instance of text on every line in file 
+- `%s/UNWANTED TEXT/NEW TEXT/`
+
+#### delete all instances of text from every line in file 
+- `%s/UNWANTED TEXT //g`
+
+#### delete only first instance of text from every line in file 
+- `%s/UNWANTED TEXT //`
+
+#### insert text at the beginning of every line in file 
+*space after my text is optional*
+- `%s/^/MY TEXT /`
+
+#### insert text at the end of every line in file 
+*space before my text is optional*
+- `%s/$/ MY TEXT/`
+
+#### insert text at the beginning of every line in file starting with rm
+- `%s/^rm/sudo /`
+
+
+#### replace text at the beginning of every line in file starting with cp
+- `%s/^cp/cp -r/`
+

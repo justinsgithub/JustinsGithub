@@ -1,0 +1,118 @@
+# pymongo helper functions
+
+```py
+import pymongo
+
+uri = "MY-_MONGODB-URL"
+
+cluster = pymongo.MongoClient(uri)
+
+test_db = cluster["test"]
+test_collection = test_db["test"]
+
+tc = test_collection
+
+# post1 = {"name": "user 1", "score": 5}
+# post2 = {"name": "user 2", "score": 15}
+# post3 = {"name": "user 3", "score": 20}
+
+
+def delete_data(collection, thiskey, thisvalue, isMany: bool):
+    if isMany:
+        print("deleting all data")
+        deleted = collection.delete_many({thiskey: thisvalue})
+        print(deleted)
+
+    if not isMany:
+        print("deleting single data")
+        deleted = collection.delete_one({thiskey: thisvalue})
+        print(deleted)
+
+
+def insert_data(collection, data, isMany: bool):
+    if isMany:
+        print("inserting all data")
+        collection.insert_many(data)
+        print(data)
+
+    if not isMany:
+        print("inserting single data")
+        collection.insert_one(data)
+        print(data)
+
+
+def all_data(collection):
+    print("printing all data in collection")
+    search = collection.find({})
+    for x in search:
+        print(x)
+
+
+def query_data(collection, thiskey, thisvalue, isMany: bool):
+    if isMany:
+        print("printing all data in search")
+        search = collection.find({thiskey: thisvalue})
+        print(search)
+        for x in search:
+            print(x)
+
+    if not isMany:
+        print("printing first data in search")
+        search = collection.find_one({thiskey: thisvalue})
+        print(search)
+
+
+def update_data(collection, thiskey, thisvalue, newkey, newvalue,
+                isMany: bool):
+    if isMany:
+        print("printing all data in search")
+        update = collection.update_many({thiskey: thisvalue},
+                                        {"$set": {
+                                            newkey: newvalue
+                                        }})
+        print(update)
+
+    if not isMany:
+        print("printing first data in search")
+        update = collection.update_one({thiskey: thisvalue},
+                                       {"$set": {
+                                           newkey: newvalue
+                                       }})
+        print(update)
+
+
+def count_data(collection):
+    data_count = collection.count_documents({})
+    print(data_count)
+    return data_count
+
+def increment_data(collection, querykey, queryvalue, incrementkey,
+                   incrementvalue: int, isMany: bool):
+    if isMany:
+        print("incrementing data in query")
+        update = collection.update_many(
+            {querykey: queryvalue}, {"$inc": {
+                incrementkey: incrementvalue
+            }})
+        print(update)
+
+    if not isMany:
+        print("incrementing data in query")
+        update = collection.update_one(
+            {querykey: queryvalue}, {"$inc": {
+                incrementkey: incrementvalue
+            }})
+        print(update)
+
+
+# all_data(tc)
+# delete_data(tc, "name", "user1", True)
+# update_data(tc, "name", "user1", "name", "user1-firstname user1-lastname", True)
+# all_data(tc)
+# count_data(tc)
+# query_data(tc, "name", "user1", False)
+# query_data(tc, "name", "user2", False)
+# query_data(tc, "name", "user3", False)
+# query_data(tc, "name", "user1-firstname user1-lastname", False)
+# increment_data(tc, "name", "user1", "score", 5, False)
+```

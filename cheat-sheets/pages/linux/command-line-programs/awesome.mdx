@@ -1,0 +1,78 @@
+# awesome window manager 
+
+import Callout from 'nextra-theme-docs/callout'
+
+awesome is a tiling window manager
+
+#### install 
+- `sudo apt install awesome`
+
+#### start using
+logout and select awesome from the settings widget when logging back in
+
+#### open terminal 
+SUPER + ENTER
+
+#### close window
+SUPER + SHIFT + c
+
+#### open run prompt
+SUPER + r
+
+#### open chrome browser
+SUPER + r 
+- `chromium` + ENTER
+
+#### find default configuration file
+- `sudo find / -name rc.lua` 
+> should output something like:
+/etc/xdg/awesome/rc.lua
+
+#### cp default configuration file to home directory
+- `cp /etc/xdg/awesome/rc.lua ~/.config/awesome/`
+
+#### customize awesome 
+*open ~/.config/awesome/rc.lua with text editor*
+
+#### open default configuration file in web browser
+- `mkdir -p ~/Documents/Configs; cp -r ~/.config/* ~/Documents/Configs/`
+
+*in webbrowser go to:*
+`file:///home/MYUSERNAME/Documents/Configs/awesome/rc.lua`
+
+#### install compositor
+- `sudo apt install compton`
+
+#### install wallpaper tool
+- `sudo apt install nitrogen`
+
+#### default wallpaper directory 
+`/usr/share/backgrounds`
+
+#### setup wallpaper 
+SUPER + r 
+
+`nitrogen` 
+
+ENTER
+
+click "Preferences", "Add", "File System", "usr", "share", "backgrounds", "Select", "OK"
+
+click on preferred wallpaper
+
+click "Apply"
+
+*close nitrogen*
+
+SUPER + SHIFT + c
+
+
+#### run programs automatically on login
+- `echo 'awful.spawn.with_shell("compton")' >> ~/.config/awesome/rc.lua` 
+- `echo 'awful.spawn.with_shell("nitrogen --restore")' >> ~/.config/awesome/rc.lua`
+
+#### show awesome keybindings
+SUPER + s
+
+#### reload awesome
+SUPER + r

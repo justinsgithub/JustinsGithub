@@ -1,0 +1,145 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Bash Aliases 
+
+<Callout emoji="⚠️">this file is sourced from the `~/.bashrc file`</Callout>
+
+1. open up the bash_aliases file 
+
+`vim ~/.bash_aliases`
+
+7. copy and paste the below contents into file
+
+```shell
+#!/bin/bash
+alias a='alias'
+a v='vim'
+a vi='vim'
+a vim='vim'
+a br="vim ~/.bashrc; bash"
+a ba="vim ~/.bash_aes; bash"
+a vr='vim ~/.SpaceVim.d/init.toml'
+a vimconfig='vim ~/.SpaceVim.d/init.toml'
+a l='ls -1'
+a la='ls -1a'
+a m='mv'
+a c='clear'
+a g='git'
+a R="rm -rf"
+a py="python3"
+
+# Alias's to change the directory
+a web='cd /var/www/html'
+
+a alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Show help for this .bashrc file
+a bashhelp='less ~/.bashrc_help'
+
+# a to show the date
+a showdate='date "+%Y-%m-%d %A %T %Z"'
+
+# Alias's to modified commands
+a cp='cp -i'
+a mv='mv -i'
+a rm='rm -iv'
+a mkdir='mkdir -p'
+a ps='ps auxf'
+a ping='ping -c 10'
+a less='less -R'
+a cls='clear'
+a apt-get='sudo apt-get'
+a multitail='multitail --no-repeat -c'
+
+a vi='vim'
+a svi='sudo vi'
+a vis='vim "+set si"'
+
+# Change directory aes
+a home='cd ~'
+a cd..='cd ..'
+a ..='cd ..'
+a ...='cd ../..'
+a ....='cd ../../..'
+a .....='cd ../../../..'
+
+# cd into the old directory
+a bd='cd "$OLDPWD"'
+
+# Remove a directory and all files
+a rmd='/bin/rm  --recursive --force --verbose '
+
+# Alias's for multiple directory listing commands
+a la='ls -Alh' # show hidden files
+a ls='ls -aFh --color=always' # add colors and file type extensions
+a lx='ls -lXBh' # sort by extension
+a grep="/usr/bin/grep $GREP_OPTIONS"
+unset GREP_OPTIONS
+a lk='ls -lSrh' # sort by size
+a lc='ls -lcrh' # sort by change time
+a lu='ls -lurh' # sort by access time
+a lr='ls -lRh' # recursive ls
+a lt='ls -ltrh' # sort by date
+a lm='ls -alh |more' # pipe through 'more'
+a lw='ls -xAh' # wide listing format
+a ll='ls -Fls' # long listing format
+a labc='ls -lap' #alphabetical sort
+a lf="ls -l | egrep -v '^d'" # files only
+a ldir="ls -l | egrep '^d'" # directories only
+
+# a chmod commands
+a mx='chmod a+x'
+a 000='chmod -R 000'
+a 644='chmod -R 644'
+a 666='chmod -R 666'
+a 755='chmod -R 755'
+a 777='chmod -R 777'
+
+# Search command line history
+a h="history | grep "
+
+# Search running processes
+a proccesses="ps aux | grep "
+a topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
+
+# Search files in the current folder
+a f="find . | grep "
+
+# Count all files (recursively) in the current folder
+a countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
+
+# To see if a command is aed, a file, or a built-in command
+a checkcommand="type -t"
+
+# Show current network connections to the server
+a ipview="netstat -anpl | grep :80 | awk {'print \$5'} | cut -d\":\" -f1 | sort | uniq -c | sort -n | sed -e 's/^ *//' -e 's/ *\$//'"
+
+# Show open ports
+a openports='netstat -nape --inet'
+
+# Alias's for safe and forced reboots
+a rebootsafe='sudo shutdown -r now'
+a rebootforce='sudo shutdown -r -n now'
+
+# Alias's to show disk space and space used in a folder
+a diskspace="du -S | sort -n -r |more"
+a folders='du -h --max-depth=1'
+a folderssort='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
+a tree='tree -CAhF --dirsfirst'
+a treed='tree -CAFd'
+a mountedinfo='df -hT'
+
+# Alias's for archives
+a mktar='tar -cvf'
+a mkbz2='tar -cvjf'
+a mkgz='tar -cvzf'
+a untar='tar -xvf'
+a unbz2='tar -xvjf'
+a ungz='tar -xvzf'
+
+# Show all logs in /var/log
+a logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+
+# SHA1
+a sha1='openssl sha1'
+```

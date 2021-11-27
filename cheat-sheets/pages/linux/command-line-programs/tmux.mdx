@@ -1,0 +1,47 @@
+# tmux terminal multiplexer
+
+import Callout from 'nextra-theme-docs/callout'
+
+
+## installation 
+
+<Callout>
+this is for a debian-based system, installation commands may vary 
+</Callout>
+
+#### install dependencies
+
+
+```shell
+sudo apt-get install libevent ncurses libevent-dev ncurses-dev build-essential bison pkg-config autoconf automake
+```
+
+#### clone tmux repository
+
+```shell
+git clone 'https://github.com/tmux/tmux'
+```
+
+#### change into new directory with cloned tmux repository
+
+```shell
+cd tmux
+```
+
+#### run autogen script
+
+```shell
+sh autogen.sh
+```
+
+#### run configure and make
+
+```shell
+./configure && make
+```
+
+#### add tmux to path
+
+```shell
+sudo cp tmux /bin
+```

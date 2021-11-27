@@ -1,0 +1,75 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# basic Linux commands 
+
+> using the command line
+
+## clear 
+### clear terminal screen, aka CTRL + L
+<Callout>
+CTRL + L does same thing as clear and works with REPLs such as node and python as well 
+</Callout>
+
+|    example    |         description        |
+| :------------ | :---------------------------------: |
+| clear     | clears the terminal screen  |
+| CTRL + L     | clears the terminal screen  |
+
+## cd 
+### change directory
+
+|    example    |        description         |
+| :------------ | :---------------------------------: |
+| cd            | change to home directory   |
+| cd ..         | change to parent directory |
+| cd /          | change to root directory   |
+| cd ~/Documents| change to current user Documents directory  |
+| cd ~/Documents/pdfs | change to current user pdfs directory  |
+
+
+## ls
+### list 
+
+|    example    |         description        |
+| :------------ | :---------------------------------: |
+| ls            | shows current directory folders / files       |
+| ls ../        | shows parent directory folders / files       |
+| ls /          | shows filesystem root directory folders / files|
+| ls ~/         | shows current users home directory folders / files|
+| ls ~/Documents| shows current users Documents directory folders / files|
+
+
+## ls options  
+### -a, all files
+### -l, long format
+### -t, time ordered
+
+|    example    |         description        |
+| :------------ | :---------------------------------: |
+| ls -a         | lists all files including hidden files|
+| ls -l         | lists files with additional information|
+| ls -t         | lists files in order, first listed is most recently modified|
+
+## pwd
+### print working directory  
+
+|    example    |         description        |
+| :------------ | :---------------------------------: |
+| pwd           | shows path to current directory     |
+
+## history
+### command history
+
+|    example    |         description        |
+| :------------ | :---------------------------------: |
+| history       | shows command line history |
+| ↑             | cycles through previous commands  |
+| ↓             | cycles through cycled commands 
+
+## TAB key
+### autocompletion 
+
+|    example    |         description        |
+| :------------ | :---------------------------------: |
+| cd ~/Docu TAB + ENTER | changes to current user Documents directory |
+| ls ~/Down TAB + ENTER | shows files in current users Downloads directory|

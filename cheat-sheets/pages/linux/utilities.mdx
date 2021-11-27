@@ -1,0 +1,21 @@
+# linux tips
+
+## burn iso to USB
+
+> usb should be located somewhere similiar to /dev/sdc
+
+```shell 
+sudo fdisk -l
+sudo umount /dev/sdc
+sudo dd bs=4M if=my-linux-image.iso of=/dev/sdc
+```
+
+## grub bootloader customizer
+```shell
+sudo apt install grub-customizer
+```
+
+## partition manager
+```shell
+sudo apt install gparted
+```
