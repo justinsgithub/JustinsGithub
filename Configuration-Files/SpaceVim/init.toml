@@ -1,0 +1,100 @@
+# SpaceVim Hints
+
+
+# \ NUMBER = jumps to NUMBER tab
+# SPC s c = toggle search_highlight_persist
+# SPC t h i =toggle highlight indentation levels
+# s t = opens new tab
+# s v = opens window below
+# s g = opens window to the right
+# SPC WINDOWNUMBER = jumps to WINDOWNUMBER
+
+
+
+# SPC t t tab manager window
+
+# SPC T m 	toggle menu bar
+# SPC T t 	toggle tool bar
+
+# SPC b N h 	create new empty buffer in a new window on the left
+# SPC b N j 	create new empty buffer in a new window at the bottom
+# SPC b N k 	create new empty buffer in a new window above
+# SPC b N l 	create new empty buffer in a new window below
+# SPC b N n 	create new empty buffer in current window
+
+# SPC f / 	Find files with find or fd command
+# SPC f b 	go to file bookmarks
+
+
+# SPC f f 	open file
+# SPC f s 	save a file
+# SPC f a 	save as new file name
+# SPC f S 	save all files
+# SPC f r 	open a recent file
+
+
+
+# All SpaceVim option below [option] section
+[options]
+    wrap_line = true
+    filetree_direction = 'left'
+    relativenumber = true
+	default_indent = 4
+	expand_tab = true
+	search_highlight_persist = false
+	automatic_update = true
+	vimcompatible = false
+	colorscheme = "material"
+#colorscheme_bg = "light"
+	enable_language_specific_leader = true
+#statusline_separator = "arrow"
+#statusline_iseparator = "arrow"
+#enable_tabline_filetype_icon = true
+enable_statusline_mode = true
+enable_guicolors = true
+	buffer_index_type = 4
+#bootstrap_after = 'myspacevim#after'
+      lint_engine = 'ale'
+
+
+# Enable autocomplete layer
+[[layers]]
+  name = "checkers"
+[[layers]]
+name = 'autocomplete'
+auto_completion_return_key_behavior = "complete"
+auto_completion_tab_key_behavior = "smart"
+[[layers]]
+name = 'colorscheme'
+[[layers]]
+name = 'shell'
+default_position = 'top'
+default_height = 30
+[[layers]]
+name = "incsearch"
+[[layers]]
+name = "lsp"
+#  [[layers]]
+#    name = "cscope"
+[[layers]]
+  name = "format"
+  enable=true
+  format_on_save = true
+#  [[layers]]
+#  name = "lang#sh"
+[[layers]]
+name = 'lang#javascript'
+auto_fix = true
+enable_flow_syntax = true
+format_on_save = true
+[[layers]]
+name = "lang#html"
+#[[layers]]
+#name = 'lang#python'
+#format_on_save = true
+[[layers]]
+name = 'fzf'
+[[layers]]
+name = 'edit'
+[[layers]]
+name = 'tools'
