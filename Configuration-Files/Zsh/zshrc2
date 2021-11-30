@@ -1,0 +1,38 @@
+#export PATH=$PATH:/home/justin/.local/share/gem/ruby/3.0.0/bin
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Use powerline
+USE_POWERLINE="true"
+# Source manjaro-zsh-configuration
+if [[ -e manjaro-zsh-config ]]; then
+  source manjaro-zsh-config
+fi
+# Use manjaro zsh prompt
+if [[ -e manjaro-zsh-prompt ]]; then
+  source manjaro-zsh-prompt
+fi
+
+
+
+alias vdm="vim ~/Desktop/Mongo/$1"
+
+alias v='vim'
+alias vi='vim'
+alias vim='vim'
+alias zr="vim ~/.zshrc; zsh"
+alias zshconfig="vim ~/.zshrc; zsh"
+alias vr='vim ~/.SpaceVim.d/init.toml' 
+alias vimhelp='cat ~/bin/helpfiles/spacevim.txt' 
+alias spacevimhelp='cat ~/bin/helpfiles/spacevim.txt' 
+alias vimconfig='vim ~/.SpaceVim.d/init.toml' 
+alias l='ls -1'
+alias la='ls -1a'
+alias m='mv'	
+alias c='clear'
+alias ch="chmod +x"
+alias g='git'
+alias R="rm -rf"
+alias termconfig="nvim ~/.wezterm.lua"
+alias python="python3"

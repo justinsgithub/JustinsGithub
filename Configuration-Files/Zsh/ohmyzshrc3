@@ -1,0 +1,23 @@
+P=/home/justin/Programs
+export PATH=$PATH:$P/bin
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export ZSH="/home/$USER/.oh-my-zsh"
+ZSH_THEME=random
+CASE_SENSITIVE="true"
+zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' frequency 2
+#ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+HIST_STAMPS="yyyy-mm-dd"
+plugins=(copyfile jsontools copybuffer git fzf vi-mode sudo colorize zsh-autosuggestions web-search debian autopep8 z colored-man-pages emoji npm pep8 pip zsh-interactive-cd zsh-interactive-cd history)
+source $ZSH/oh-my-zsh.sh
+export LANG=en_US.UTF-8
+export EDITOR='nvim'
+alias zr="nvim ~/.zshrc; zsh"
+alias vr="nvim ~/.SpaceVim.d/init.toml"
+alias py="python3"
+alias python="python3"
+alias rm='mv --force -t ~/.archive'
+fun() { print -z print The time now is $(date); }
+source /home/justin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
