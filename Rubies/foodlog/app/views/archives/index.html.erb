@@ -1,0 +1,50 @@
+<div class="columns is-centered mt-6">
+    <div class="column is-half">
+        <% @entries.each do |day, entries| # @entries looped through here, entries looped through below%>
+            <h3 class="is-size-4 has-text-weight-bold mb-4 has-text-centered">
+                Entries for <%= day %>
+            </h3>
+
+            <nav class="level is-mobile">
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Calories</p>
+                        <p class="title"><%= entries.pluck(:calories).sum %></p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Protein</p>
+                        <p class="title"><%= entries.pluck(:proteins).sum %></p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Carbohydrate</p>
+                        <p class="title"><%= entries.pluck(:carbohydrates).sum %></p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Fat</p>
+                        <p class="title"><%= entries.pluck(:fats).sum %></p>
+                    </div>
+                </div>
+            </nav>
+            
+            <% entries.each do |entry| # nested loop, nesting through each entry in entries%> 
+                <%= link_to entry_path(entry) do %>
+                    <div class="card">
+                        <div class="card-content">
+                            <strong><%= entry.meal_type %></strong><br />
+                            <%= entry.calories %>calories,
+                            <%= entry.proteins %>g protein,
+                            <%= entry.carbohydrates %>g carbohydrate,
+                            <%= entry.fats %>g fat
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>
