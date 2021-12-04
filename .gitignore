@@ -154,3 +154,4 @@ dmypy.json
 .pyre/
 database
 Database
+secrets.py

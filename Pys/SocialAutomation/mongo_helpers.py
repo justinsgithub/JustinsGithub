@@ -1,13 +1,5 @@
 #!/bin/python3
 
-import pymongo
-
-uri = "my-mongo-uri"
-cluster = pymongo.MongoClient(uri)
-
-test_db = cluster["test"]
-test_collection = test_db["test"]
-
 def delete_data(collection, thiskey, thisvalue, isMany: bool):
     if isMany:
         print("deleting all data")
