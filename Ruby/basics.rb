@@ -1,3 +1,89 @@
+
+
+
+languages = ["HTML", "CSS", "JavaScript", "Python", "Ruby"]
+
+languages.each {|language| puts language}
+
+friends = ["Milhouse", "Ralph", "Nelson", "Otto"]
+
+family = { "Homer" => "dad",
+  "Marge" => "mom",
+  "Lisa" => "sister",
+  "Maggie" => "sister",
+  "Abe" => "grandpa",
+  "Santa's Little Helper" => "dog"
+}
+
+puts ""
+family.each { |x, y| puts x }
+puts ""
+family.each { |x, y| puts y }
+puts ""
+family.each { |x, y| puts "#{x}: #{y}" }
+puts ""
+family.each { |x| puts x }
+
+
+pets = Hash.new
+
+pets["blue"] = "dog"
+
+puts pets["blue"]
+
+
+my_2d_array = [[222],["d","d","d"]]
+
+string_array = ["my", "string", "array"]
+
+my_array = [0,1,2,4,5,5,5,5]
+
+demo_array = [100, 200, 300, 400, 500]
+
+print demo_array[2]
+
+
+# print 30 times
+30.times do
+  print "Ruby!"
+end
+
+x = 0
+loop do
+  x += 1
+  print "Ruby!"
+  break if x == 30
+end
+
+
+# print 1 - 50 inclusive
+
+i = 1
+while i <= 50 do
+  print i
+  i += 1
+end
+
+until i > 50 do 
+  print i
+  i += 1
+end
+
+for x in 1..50
+  print x
+end
+
+my_age = 26
+my_age.times { print "printing my age times "} 
+
+odds = [1,3,5,7,9]
+
+odds.each { |num| print num * 2 }
+
+odds.each do |num|
+  print num * 2
+end
+
 loop {print "hello world forever "}
 
 i = 20
