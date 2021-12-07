@@ -1,4 +1,42 @@
 
+
+puts "give me some data to hash"
+
+default_value = 0
+
+text = gets.chomp
+
+words = text.split(" ")
+
+frequencies = Hash.new(default_value)
+
+words.each { |word|
+  frequencies[word] += 1  
+}
+
+frequencies = frequencies.sort_by do |word, sort_by_this|
+  sort_by_this
+end
+
+frequencies.reverse!
+
+frequencies.each { |word, frequency|
+  puts word + " " + frequency.to_s
+}
+
+test = "this is now my sentence of strings and my sentence is random and it is simple and it is ending now" 
+
+lunch_order = {
+  "Ryan" => "wonton soup",
+  "Eric" => "hamburger",
+  "Jimmy" => "sandwich",
+  "Sasha" => "salad",
+  "Cole" => "taco"
+}
+
+
+lunch_order.each {|x,y| puts y}
+
 my_hash = Hash.new
 
 my_hash["key1"] = "value1"
