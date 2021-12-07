@@ -1,4 +1,61 @@
+# METHODS / FUNCTIONS BLOCKS SORTING
 
+def greet_friends(greeting, *friends)
+  friends.each { |friend| puts "#{greeting}, #{friend}!" }
+end
+
+greet_friends("greetings", "friend1", "friend2", "friend3", "friend4")
+
+def greet_friends_again(greeting, *friends)
+  greet = greeting
+  last_friend = friends[-1]
+  friends.each { |friend| 
+  if !(friend == last_friend)
+    greet +=  " #{friend},"
+  end
+  }
+  greet += " and #{last_friend}!"
+  puts greet
+end
+
+greet_friends_again("greetings", "friend1", "friend2", "friend3", "friend4")
+
+
+def cube_this(n)
+  puts n ** 3
+end
+
+cube_this(8)
+
+def square_this(n)
+  puts n ** 2
+end
+
+
+def array_of_10
+  puts (1..10).to_a
+end
+
+array_of_10
+
+
+def greeting
+  puts "greetings"
+end
+
+greeting
+
+def puts_1_to_10
+  (1..10).each { |i| puts i }
+end
+
+puts_1_to_10 
+
+
+
+
+
+# ARRAYS AND HASHES
 
 puts "give me some data to hash"
 
@@ -103,6 +160,8 @@ demo_array = [100, 200, 300, 400, 500]
 print demo_array[2]
 
 
+# LOOPS
+
 # print 30 times
 30.times do
   print "Ruby!"
@@ -182,6 +241,9 @@ while i < 5
   i += 1
 end
 
+  
+# CONTROL FLOW
+  
 t0 = !(700 / 10 == 70)
 boolean_0 = false
 
@@ -194,85 +256,7 @@ boolean_2 = false
 t3 = true || !(true || false)
 boolean_3 = true
 
-
-my_num =  25  
-my_boolean = true 
-my_string = "Ruby"
-puts my_num
-puts my_boolean
-puts my_string
-puts "What's up?"
-puts "Oxford Montalvo" # new line
-print "What's up?"
-print "Oxford Montalvo" # same line
-puts "puts 6".length
-puts "erehT olleH".reverse
-puts "Justin".upcase 
-puts "Justin".downcase 
-
-=begin
-I'm 
-a 
-multi-line
-comment
-=end
-
-sum  = 13 + 379
-product = 923 * 15
-quotient = 13209 / 17
-
-name = "Justin"
-name.downcase
-name.reverse
-name.upcase
-
-name = "Justin"
-name.downcase.reverse.upcase
-
-print("What's your first name?")
-first_name = gets.chomp
-puts "Your first name is #{first_name}!"
-
-
-print("What is your last name?")
-last_name = gets.chomp
-puts "Your last name is #{last_name}!"
-
-print("What city are you from?")
-city = gets.chomp
-puts "Your hometown is #{city}!"
-
-print("What's the abbreviation of the state you are from?")
-state = gets.chomp
-puts "You are from #{state}!"
-
-print("What's your first name?")
-first_name = gets.chomp
-first_name.capitalize!
-puts "Your first name is #{first_name}!"
-
-
-print("What is your last name?")
-last_name = gets.chomp
-last_name.capitalize!
-puts "Your last name is #{last_name}!"
-
-
-print("What city are you from?")
-city = gets.chomp
-city = city.capitalize!
-puts "Your hometown is #{city}!"
-
-print("What's the abbreviation of the state you are from?")
-state = gets.chomp
-state.upcase!
-puts "You are from #{state}!"
-# control flow
-
-print "Integer please: "
-user_num = Integer(gets.chomp)
-puts user_num
-
+ 
 puts "type Y to continue, H for help"
 answer = gets.chomp
 if answer.upcase == "Y"
@@ -375,3 +359,84 @@ test_2 = false || true
 
 # test_3 = should be false
 test_3 = false && false
+
+  
+# VERY BASICS
+
+my_num =  25  
+my_boolean = true 
+my_string = "Ruby"
+puts my_num
+puts my_boolean
+puts my_string
+puts "What's up?"
+puts "Oxford Montalvo" # new line
+print "What's up?"
+print "Oxford Montalvo" # same line
+puts "puts 6".length
+puts "erehT olleH".reverse
+puts "Justin".upcase 
+puts "Justin".downcase 
+
+=begin
+I'm 
+a 
+multi-line
+comment
+=end
+
+sum  = 13 + 379
+product = 923 * 15
+quotient = 13209 / 17
+
+name = "Justin"
+name.downcase
+name.reverse
+name.upcase
+
+name = "Justin"
+name.downcase.reverse.upcase
+
+print("What's your first name?")
+first_name = gets.chomp
+puts "Your first name is #{first_name}!"
+
+
+print("What is your last name?")
+last_name = gets.chomp
+puts "Your last name is #{last_name}!"
+
+print("What city are you from?")
+city = gets.chomp
+puts "Your hometown is #{city}!"
+
+print("What's the abbreviation of the state you are from?")
+state = gets.chomp
+puts "You are from #{state}!"
+
+print("What's your first name?")
+first_name = gets.chomp
+first_name.capitalize!
+puts "Your first name is #{first_name}!"
+
+
+print("What is your last name?")
+last_name = gets.chomp
+last_name.capitalize!
+puts "Your last name is #{last_name}!"
+
+
+print("What city are you from?")
+city = gets.chomp
+city = city.capitalize!
+puts "Your hometown is #{city}!"
+
+print("What's the abbreviation of the state you are from?")
+state = gets.chomp
+state.upcase!
+puts "You are from #{state}!"
+# control flow
+
+print "Integer please: "
+user_num = Integer(gets.chomp)
+puts user_num
