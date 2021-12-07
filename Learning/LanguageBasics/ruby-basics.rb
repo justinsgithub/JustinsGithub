@@ -1,3 +1,41 @@
+loop {print "hello world forever "}
+
+i = 20
+loop do
+  i -= 1
+  next if i % 2 != 0 
+  print "#{i}"
+  break if i <= 0
+end
+  
+i = 20
+loop do
+  i -= 1
+  print "#{i}"
+  break if i <= 0
+end
+  
+for num in 1..20
+  puts num
+end
+
+for num in 1...15
+  puts num
+end
+
+counter = 1
+until counter > 10
+  puts counter
+  # Add code to update 'counter' here!
+  counter += 1
+end
+
+i = 0
+while i < 5
+  puts i
+  i += 1
+end
+
 puts "please enter some text i can lisp >  "
 
 user_input = gets.chomp
@@ -22,6 +60,19 @@ end
 test = "Ceasars Palace So Has The Nicest Niceties"
 
 test_output = "Theatharth Palathe Tho Hath The Nithetht Nithetieth"
+
+
+t0 = !(700 / 10 == 70)
+boolean_0 = false
+
+t1 = (3 < 4 || false) && (false || true)
+boolean_1 = true
+
+t2 = !true && (!true || 100 != 5**2)
+boolean_2 = false
+
+t3 = true || !(true || false)
+boolean_3 = true
 
 
 my_num =  25  
@@ -129,38 +180,29 @@ puts is_true
 
 
 
-#test_1 = 17 > 16
-
-#test_2 = 21 < 30
-
-#test_3 = 9 <= 9
-
-#test_4 = -11 < 4
-
-
-# test_1 = 77 != 77
+test_1 = 77 != 77
 test_1 = false
 
-# test_2 = -4 <= -4
+test_2 = -4 <= -4
 test_2 = true
 
-# test_3 = -44 < -33
+test_3 = -44 < -33
 test_3 = true
 
-# test_4 = 100 == 1000
+test_4 = 100 == 1000
 test_4 = false
 
 
-# boolean_1 = 77 < 78 && 77 < 77
+boolean_1 = 77 < 78 && 77 < 77
 boolean_1 = false
 
-# boolean_2 = true && 100 >= 100
+boolean_2 = true && 100 >= 100
 boolean_2 = true
 
-# boolean_3 = 2**3 == 8 && 3**2 == 9
+boolean_3 = 2**3 == 8 && 3**2 == 9
 boolean_3 = true
 
-# boolean_1 = 2**3 != 3**2 || true
+boolean_1 = 2**3 != 3**2 || true
 boolean_1 = true
 
 # boolean_2 = false || -10 > -9
@@ -174,18 +216,6 @@ boolean_1 = false
 
 # boolean_2 = !true && !true
 boolean_2 = false
-
-# boolean_3 = !(700 / 10 == 70)
-boolean_3 = false
-
-# boolean_1 = (3 < 4 || false) && (false || true)
-boolean_1 = true
-
-# boolean_2 = !true && (!true || 100 != 5**2)
-boolean_2 = false
-
-# boolean_3 = true || !(true || false)
-boolean_3 = true
 
 if 6 < 5 || 6 == 5
   puts "6 is less than 5"
