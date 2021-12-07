@@ -182,3 +182,22 @@ end
 problem = false
 
 print "Good to go!" unless problem
+
+# test_1 should be false
+test_1 = 10 > 199
+
+# test_2 = should be false
+test_2 = "hi" == "bye"
+
+# test_3 = should be true
+test_3 = 100 == 100
+
+
+# test_1 should be true
+test_1 = true && true
+
+# test_2 = should be true
+test_2 = false || true
+
+# test_3 = should be false
+test_3 = false && false
