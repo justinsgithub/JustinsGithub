@@ -1,0 +1,87 @@
+import Callout from 'nextra-theme-docs/callout'
+
+
+# Git Version Control System
+
+
+## configure globals
+
+
+```shell
+git config --global init.defaultBranch main
+git config --global user.name my-username
+git config --global user.email my-email@my-provider.com
+```
+
+## initialize repository
+
+```shell
+git init
+```
+
+## add README
+
+```
+echo '# my new repository' >> README.md
+```
+## change branches
+
+```shell
+git branch -m testing-branch
+```
+## clone a repository
+
+```shell
+git clone https://git-website.com/repository-name.git
+```
+
+## add origin
+
+```shell
+git remote add origin git@git-site.com:my-username-git-site/my-repository.git
+```
+
+## clone personal Github repository 
+
+```shell
+git clone git@github.com:my-username/my-git-repository.git
+```
+
+```shell
+git status
+```
+## check the differences between file in current working directory and the staged directory
+
+```shell
+git diff my-file-name
+```
+
+## show logs for all commits on current project
+
+```shell
+git log
+```
+
+## add file changes to staging area
+
+```shell
+git add my-file-name
+```
+
+## add all file changes to staging area
+
+```shell
+git add .
+```
+
+## commit code
+
+```shell
+git commit -m "my commit message"
+```
+
+## show latest commit log
+
+```shell
+git show HEAD
+```

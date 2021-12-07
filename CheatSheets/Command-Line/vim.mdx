@@ -1,0 +1,38 @@
+# Vim text-editor
+
+## the g command 
+
+
+## delete all blank lines in file
+- `g/^\s*$/d`
+
+## replace all instances of text on every line in file 
+- `%s/UNWANTED TEXT /NEW TEXT/g`
+
+## replace only the first instance of text on every line in file 
+- `%s/UNWANTED TEXT/NEW TEXT/`
+
+## delete all instances of text from every line in file 
+- `%s/UNWANTED TEXT //g`
+
+## delete only first instance of text from every line in file 
+- `%s/UNWANTED TEXT //`
+
+## insert text at the beginning of every line in file 
+*space after my text is optional*
+- `%s/^/MY TEXT /`
+
+## insert text at the end of every line in file 
+*space before my text is optional*
+- `%s/$/ MY TEXT/`
+
+## insert text at the beginning of every line in file starting with rm
+- `%s/^rm/sudo /`
+
+## replace text at the beginning of every line in file starting with cp
+- `%s/^cp/cp -r/`
+
+## delete all blank lines in file
+- `g/^\s*$/d`
+
+

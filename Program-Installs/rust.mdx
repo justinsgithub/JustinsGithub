@@ -1,0 +1,49 @@
+# Rust Programming Language
+
+## install
+
+```shell
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+
+rustup update
+
+rustup doc
+```
+
+## hello_world
+
+```shell
+mkdir ~/projects
+cd ~/projects
+mkdir hello_world
+cd hello_world
+
+echo '
+fn main() {
+    println!("Hello, world!");
+}' >> main.rs
+
+rustc main.rs
+./main
+```
+
+## hello_cargo
+
+```shell
+cargo new hello-cargo
+cd hello_cargo
+
+```
+
+## Cargo.toml
+
+> TOML, Tom's Obvious Minimal Language
+
+```shell
+[package]
+name = "hello_cargo"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+```
