@@ -1,5 +1,27 @@
 
+my_hash = Hash.new
 
+my_hash["key1"] = "value1"
+my_hash["key2"] = "value2"
+
+
+my_array = [["this","is"],["my","array"]]
+
+
+# perform action on each individual item
+
+s = [["ham", "swiss"], ["turkey", "cheddar"], ["roast beef", "gruyere"]]
+
+s.each {|sub_array| sub_array.each {|item| puts item}}
+
+secret_identities = {
+  "The Batman" => "Bruce Wayne",
+  "Superman" => "Clark Kent",
+  "Wonder Woman" => "Diana Prince",
+  "Freakazoid" => "Dexter Douglas"
+}
+  
+secret_identities.each {|key,value| puts "#{key}: #{value}"}
 
 languages = ["HTML", "CSS", "JavaScript", "Python", "Ruby"]
 
