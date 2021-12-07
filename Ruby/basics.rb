@@ -1,4 +1,37 @@
-# METHODS / FUNCTIONS BLOCKS SORTING
+# METHODS BLOCKS SORTING
+
+# method that capitalizes a word
+def capitalize(string) 
+  puts "#{string[0].upcase}#{string[1..-1]}"
+end
+
+capitalize("ryan") # prints "Ryan"
+capitalize("jane") # prints "Jane"
+
+# block that capitalizes each string in the array
+["ryan", "jane"].each {|string| puts "#{string[0].upcase}#{string[1..-1]}"} # prints "Ryan", then "Jane"
+
+["ryan", "jane"].each {|string| 
+  capitalize(string)
+}
+
+
+def greeter(name) 
+  return "Greetings #{name}"
+end 
+
+def by_three?(number)
+  if number % 3 == 0
+    return true
+  else
+    return false
+  end
+end
+
+
+def add (x,y)
+  return x + y 
+end
 
 def greet_friends(greeting, *friends)
   friends.each { |friend| puts "#{greeting}, #{friend}!" }
