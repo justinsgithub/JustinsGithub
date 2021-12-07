@@ -25,3 +25,22 @@ puts "erehT olleH".reverse
 puts "Justin".upcase 
 
 puts "Justin".downcase 
+
+=begin
+I'm 
+a 
+multi-line
+comment
+=end
+
+sum  = 13 + 379
+product = 923 * 15
+quotient = 13209 / 17
+
+name = "Justin"
+name.downcase
+name.reverse
+name.upcase
+
+name = "Justin"
+name.downcase.reverse.upcase
