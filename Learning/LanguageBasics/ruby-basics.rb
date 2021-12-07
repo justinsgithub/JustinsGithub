@@ -1,4 +1,25 @@
 # Ruby Comment
+print "please enter some text i can lisp >  "
+
+user_input = gets.chomp
+user_input.downcase!
+
+while user_input == ''
+  puts "you did give me no input ): > "
+  user_input = gets.chomp
+end
+
+if user_input.include? "s" || "ce" || "S" || "CE" || "Ce"
+  user_input.gsub!(/s/, "th")
+  user_input.gsub!(/ce/, "th")
+  user_input.gsub!(/S/, "Th")
+  user_input.gsub!(/Ce/, "Th")
+  user_input.gsub!(/CE/, "TH")
+  puts user_input
+else
+  puts "you did not give me anything i could lisp!! ): >"
+  user_input = gets.chomp
+end
 
 my_num =  25  
 my_boolean = true 
