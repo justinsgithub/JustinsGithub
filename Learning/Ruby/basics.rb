@@ -44,3 +44,42 @@ name.upcase
 
 name = "Justin"
 name.downcase.reverse.upcase
+
+print("What's your first name?")
+first_name = gets.chomp
+puts "Your first name is #{first_name}!"
+
+
+print("What is your last name?")
+last_name = gets.chomp
+puts "Your last name is #{last_name}!"
+
+print("What city are you from?")
+city = gets.chomp
+puts "Your hometown is #{city}!"
+
+print("What's the abbreviation of the state you are from?")
+state = gets.chomp
+puts "You are from #{state}!"
+
+print("What's your first name?")
+first_name = gets.chomp
+first_name.capitalize!
+puts "Your first name is #{first_name}!"
+
+
+print("What is your last name?")
+last_name = gets.chomp
+last_name.capitalize!
+puts "Your last name is #{last_name}!"
+
+
+print("What city are you from?")
+city = gets.chomp
+city = city.capitalize!
+puts "Your hometown is #{city}!"
+
+print("What's the abbreviation of the state you are from?")
+state = gets.chomp
+state.upcase!
+puts "You are from #{state}!"
