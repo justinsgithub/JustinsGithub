@@ -1,9 +1,8 @@
 # HASHES AND SYMBOLS
 
-
 movies = {
-  :superman : "movie about superman",
-  :batman : "movie about batman",
+  superman:"movie about superman",
+  batman:"movie about batman",
 }
 
 strings = ["HTML", "CSS", "JavaScript", "Python", "Ruby"]
@@ -16,9 +15,9 @@ strings.each { |s|
 puts symbols
 
 symbol_hash = {
-  :one : 1,
-  :two : 2,   
-  :three : 3,
+  one: 1,
+  two: 2,   
+  three: 3,
 }
 
 my_first_symbol = :mysymbol
