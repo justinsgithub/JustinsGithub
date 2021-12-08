@@ -1,5 +1,74 @@
 # BLOCKS PROCS LAMBDAS
 
+crew = {
+  captain: "Picard",
+  first_officer: "Riker",
+  lt_cdr: "Data",
+  lt: "Worf",
+  ensign: "Ro",
+  counselor: "Troi",
+  chief_engineer: "LaForge",
+  doctor: "Crusher"
+}
+
+first_half = lambda {|key, str| str < "M"}
+
+a_to_m = crew.select(&first_half)
+
+ages = [23, 101, 7, 104, 11, 94, 100, 121, 101, 70, 44]
+
+under_100 = proc do |num| 
+  if num < 100
+    true
+  else
+    false
+  end
+end
+
+under_100 = proc do |num| 
+  if num < 100
+    true
+  end
+end
+
+under_100 = proc {|num| num < 100 ? true : false}
+
+under_100 = proc {|num| num < 100}
+
+  
+youngsters = ages.select(&under_100) 
+
+puts youngsters
+
+
+odds_n_ends = [:weezard, 42, "Trady Blix", 3, true, 19, 12.345]
+
+ints  = odds_n_ends.select {|x| x.is_a? Integer}
+
+puts ints
+
+my_array = ["raindrops", :kettles, "whiskers", :mittens, :packages, 5, 6]
+
+symbol_filter = lambda {|x| x.is_a? Symbol }
+
+symbols = my_array.select(&symbol_filter)
+
+puts symbols
+
+string_filter = lambda {|x| x.is_a? String }
+
+strings = my_array.select(&string_filter)
+
+puts strings
+
+
+number_filter = lambda {|x| x.is_a? Integer }
+
+number = my_array.select(&number_filter)
+
+puts number
+
+
 strings = ["leonardo", "donatello", "raphael", "michaelangelo"]
 
 symbolize = lambda {|parameter| parameter.to_sym}
