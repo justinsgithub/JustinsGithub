@@ -1,13 +1,3 @@
-# BLOCKS, PROCS, AND LAMBDAS
-
-fibs = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-
-doubled_fibs = fibs.collect {|fib| fib * 2}
-
-
-5.times {puts "I'm a block!"}
-
-
 # METHODS BLOCKS SORTING
 
 def sort_this(arr, rev=false)
@@ -57,7 +47,6 @@ books.sort! { |firstBook, secondBook| secondBook <: firstBook }
 
 puts books
 
-
 book_1 = "A Wrinkle in Time"
 
 book_2 = "A Brief History of Time"
@@ -72,14 +61,11 @@ books.sort!
 
 # books = ["A Brief History of Time", "A Wrinkle in Time", "Charlie and the Chocolate Factory", "Utopia", "War and Peace"]
 
-
 my_array = [3, 4, 8, 7, 1, 6, 5, 9, 2]
 
 my_array.sort!
 
 # my_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-
 
 [1, 2, 3, 4, 5].each { |i| puts i }
 [1, 2, 3, 4, 5].each { |i| puts 5 }
@@ -101,7 +87,6 @@ capitalize("jane") # prints "Jane"
   capitalize(string)
 }
 
-
 def greeter(name) 
   return "Greetings #{name}"
 end 
@@ -113,7 +98,6 @@ def by_three?(number)
     return false
   end
 end
-
 
 def add (x,y)
   return x + y 
@@ -139,7 +123,6 @@ end
 
 greet_friends_again("greetings", "friend1", "friend2", "friend3", "friend4")
 
-
 def cube_this(n)
   puts n ** 3
 end
@@ -150,13 +133,11 @@ def square_this(n)
   puts n ** 2
 end
 
-
 def array_of_10
   puts (1..10).to_a
 end
 
 array_of_10
-
 
 def greeting
   puts "greetings"
