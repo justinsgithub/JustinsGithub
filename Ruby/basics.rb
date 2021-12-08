@@ -2,9 +2,10 @@
 
 
 movies = {
-  :superman => "movie about superman",
-  :batman => "movie about batman",
+  :superman : "movie about superman",
+  :batman : "movie about batman",
 }
+
 strings = ["HTML", "CSS", "JavaScript", "Python", "Ruby"]
 
 symbols = []
@@ -15,9 +16,9 @@ strings.each { |s|
 puts symbols
 
 symbol_hash = {
-  :one => 1,
-  :two => 2,   
-  :three => 3,
+  :one : 1,
+  :two : 2,   
+  :three : 3,
 }
 
 my_first_symbol = :mysymbol
@@ -30,11 +31,11 @@ puts :symbol.object_id
 
 no_nil_hash = Hash.new("not nil")
 
-matz = { "First name" => "Yukihiro",
-  "Last name" => "Matsumoto",
-  "Age" => 47,
-  "Recognition" => "inventor of Ruby",
-  "Nickname" => "Matz"
+matz = { "First name" : "Yukihiro",
+  "Last name" : "Matsumoto",
+  "Age" : 47,
+  "Recognition" : "inventor of Ruby",
+  "Nickname" : "Matz"
 }
 
 matz.each { |key, value|
@@ -59,7 +60,7 @@ puts sort_this(numbers, true)
 
 fruits = ["orange", "apple", "banana", "pear", "grapes"]
 
-fruits.sort! { |first, second| second <=> first }
+fruits.sort! { |first, second| second <: first }
 
 my_array = [1, 2, 3, 4, 5]
 
@@ -83,11 +84,11 @@ welcome("justin")
 books = ["Charlie and the Chocolate Factory", "War and Peace", "Utopia", "A Brief History of Time", "A Wrinkle in Time"]
 
 # To sort our books in ascending order, in-place
-books.sort! { |firstBook, secondBook| firstBook <=> secondBook }
+books.sort! { |firstBook, secondBook| firstBook <: secondBook }
 puts books
 
 # reverse sort
-books.sort! { |firstBook, secondBook| secondBook <=> firstBook }
+books.sort! { |firstBook, secondBook| secondBook <: firstBook }
 
 puts books
 
@@ -96,7 +97,7 @@ book_1 = "A Wrinkle in Time"
 
 book_2 = "A Brief History of Time"
 
-puts book_1 <=> book_2
+puts book_1 <: book_2
 
 # 1
 
@@ -236,11 +237,11 @@ frequencies.each { |word, frequency|
 test = "this is now my sentence of strings and my sentence is random and it is simple and it is ending now" 
 
 lunch_order = {
-  "Ryan" => "wonton soup",
-  "Eric" => "hamburger",
-  "Jimmy" => "sandwich",
-  "Sasha" => "salad",
-  "Cole" => "taco"
+  "Ryan" : "wonton soup",
+  "Eric" : "hamburger",
+  "Jimmy" : "sandwich",
+  "Sasha" : "salad",
+  "Cole" : "taco"
 }
 
 
@@ -262,10 +263,10 @@ s = [["ham", "swiss"], ["turkey", "cheddar"], ["roast beef", "gruyere"]]
 s.each {|sub_array| sub_array.each {|item| puts item}}
 
 secret_identities = {
-  "The Batman" => "Bruce Wayne",
-  "Superman" => "Clark Kent",
-  "Wonder Woman" => "Diana Prince",
-  "Freakazoid" => "Dexter Douglas"
+  "The Batman" : "Bruce Wayne",
+  "Superman" : "Clark Kent",
+  "Wonder Woman" : "Diana Prince",
+  "Freakazoid" : "Dexter Douglas"
 }
   
 secret_identities.each {|key,value| puts "#{key}: #{value}"}
@@ -276,12 +277,12 @@ languages.each {|language| puts language}
 
 friends = ["Milhouse", "Ralph", "Nelson", "Otto"]
 
-family = { "Homer" => "dad",
-  "Marge" => "mom",
-  "Lisa" => "sister",
-  "Maggie" => "sister",
-  "Abe" => "grandpa",
-  "Santa's Little Helper" => "dog"
+family = { "Homer" : "dad",
+  "Marge" : "mom",
+  "Lisa" : "sister",
+  "Maggie" : "sister",
+  "Abe" : "grandpa",
+  "Santa's Little Helper" : "dog"
 }
 
 puts ""
