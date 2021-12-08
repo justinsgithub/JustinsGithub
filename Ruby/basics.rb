@@ -1,11 +1,39 @@
 # HASHES AND SYMBOLS
 
+
+movies = {
+  :superman => "movie about superman",
+  :batman => "movie about batman",
+}
+strings = ["HTML", "CSS", "JavaScript", "Python", "Ruby"]
+
+symbols = []
+
+strings.each { |s|
+  symbols.push(s.to_sym)  # or .intern is exact same thing
+}
+puts symbols
+
+symbol_hash = {
+  :one => 1,
+  :two => 2,   
+  :three => 3,
+}
+
+my_first_symbol = :mysymbol
+
+puts "string".object_id
+puts "string".object_id
+
+puts :symbol.object_id
+puts :symbol.object_id
+
 no_nil_hash = Hash.new("not nil")
 
 matz = { "First name" => "Yukihiro",
   "Last name" => "Matsumoto",
   "Age" => 47,
-  "Nationality" => "Japanese",
+  "Recognition" => "inventor of Ruby",
   "Nickname" => "Matz"
 }
 
