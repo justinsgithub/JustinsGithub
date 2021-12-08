@@ -1,9 +1,5 @@
 # ELEGANT RUBY
 
-
-
-
-
 def square(num)
   puts "implicit return"
   num ** 2
@@ -14,7 +10,6 @@ favorite_animal ||= "cat"
 puts "What's your favorite language?"
 
 language = gets.chomp
-
 
 case language
   when "Ruby" then puts "Ruby is great for web apps!"
@@ -43,16 +38,11 @@ alphabet << "d"
 caption = "one, two, three, and "
 caption << "four!"
 
-
-
 age = 26
-
 
 age.respond_to?(:next)
 
-
 "L".upto("P") {|letter| puts letter} 
-
 
 my_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
