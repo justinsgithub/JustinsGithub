@@ -1,3 +1,13 @@
+# BLOCKS, PROCS, AND LAMBDAS
+
+fibs = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+
+doubled_fibs = fibs.collect {|fib| fib * 2}
+
+
+5.times {puts "I'm a block!"}
+
+
 # METHODS BLOCKS SORTING
 
 def sort_this(arr, rev=false)
