@@ -31,14 +31,18 @@ element in a collection (like a hash or array)
 - .collect! and .map! do the exact same thing
 
 - & can be used to convert a proc into a block 
- 
+
+- & can be used to convert symbols to procs
+
 - .collect! and .map! normally take a block
 
--  use & any time we pass a proc to a method that expects a block
+- use & any time we pass a proc to a method that expects a block
 
+- Procs are objects, so they have all the capabilities of objects 
 
+- unlike blocks, procs can be called over and over without rewriting them.
 
+- call procs directly with .call method
 
-
-
+- lambdas are objects
 
