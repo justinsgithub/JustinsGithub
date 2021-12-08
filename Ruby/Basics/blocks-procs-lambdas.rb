@@ -1,5 +1,18 @@
 # BLOCKS PROCS LAMBDAS
 
+strings = ["leonardo", "donatello", "raphael", "michaelangelo"]
+
+symbolize = lambda {|parameter| parameter.to_sym}
+
+symbols = strings.collect(&symbolize)
+print symbols
+
+def lambda_demo(a_lambda)
+  puts "I'm the method!"
+  a_lambda.call
+end
+
+lambda_demo(lambda { puts "I'm the lambda!" })
 
 numbers_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -19,9 +32,8 @@ phrase = Proc.new {puts "Hello there!"}
 
 greeter(&phrase)
 
-# Here at the amusement park, you have to be four feet tall
-# or taller to ride the roller coaster. Let's use .select on
-# each group to get only the ones four feet tall or taller.
+# at the amusement park, you have to be four feet tall or taller to ride the roller coaster. 
+# use .select on each group to get only the ones four feet tall or taller.
 
 group_1 = [4.1, 5.5, 3.2, 3.3, 6.1, 3.9, 4.7]
 group_2 = [7.0, 3.8, 6.2, 6.1, 4.4, 4.9, 3.0]
