@@ -1,3 +1,48 @@
+# ELEGANT RUBY
+
+def a
+  puts "A was evaluated!"
+  return true
+end
+
+def b
+  puts "B was also evaluated!"
+  return true
+end
+
+puts a || b
+puts "------"
+puts a && b
+
+
+def implicit_return(x=false)
+  puts x ? "implicitely returning because true" : "implicitely returning because false"
+end
+
+# Write your code on line 2!
+favorite_language ||= "Ruby"
+puts favorite_language
+
+puts "Hello there!"
+greeting = gets.chomp
+
+# Add your case statement below!
+case greeting 
+  when "English" then puts "Hello!"
+  when "French" then puts "Bonjour!"
+  when "German" then puts "Guten Tag!"
+  when "Finnish" then puts "Haloo!"
+  else puts "I don't know that language!'"
+end
+
+
+puts true ?  "true ternary" : "false ternary"
+
+puts "one-liner" if true
+
+puts "unless one-liner" unless false
+
+
 # HASHES AND SYMBOLS
 
 movie_ratings = {
