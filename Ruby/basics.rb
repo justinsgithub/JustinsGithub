@@ -1,21 +1,4 @@
 # HASHES AND SYMBOLS
-movies = {superman: 5, batman: 4,}
-
-puts "enter your choice"
-choice = gets.chomp
-
-case choice
-  when "add"
-    puts "Added!"
-  when "update"
-    puts "Updated!"
-  when "display"
-    puts "Movies!"
-  when "delete"
-    puts "Deleted!"
-  else 
-    puts "Error!"
-end
 
 movie_ratings = {
   memento: 3,
