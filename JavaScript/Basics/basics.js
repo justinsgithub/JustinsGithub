@@ -1,3 +1,66 @@
+let athleteFinalPosition = 'first place';
+
+switch (athleteFinalPosition) {
+  case "first place":
+    console.log("You get the gold medal!");
+    break;
+  case "second place":
+    console.log("You get the silver medal!");
+    break;
+  case"third place":
+    console.log("You get the bronze medal!")
+    break;
+  default:
+    console.log("No medal awarded.");
+    break;
+}
+
+let isLocked = false;
+
+isLocked ? console.log('You will need a key to open the door.') :
+  console.log('You will not need a key to open the door.');
+
+let isCorrect = true;
+
+isCorrect ? console.log('Correct!') :  console.log('Incorrect!');
+
+let favoritePhrase = 'Love That!';
+
+favoritePhrase === 'Love That!' ? console.log('I love that!') : console.log("I don't love that!")
+
+
+let tool = 'marker';
+
+let writingUtensil = tool || "pen"
+
+console.log(`The ${writingUtensil} is mightier than the sword.`);
+
+let wordCount = 1;
+
+if (wordCount) {
+  console.log("Great! You've started your work!");
+} else {
+  console.log('Better get to work!');
+}
+
+
+let favoritePhrase = '';
+
+if (favoritePhrase) {
+  console.log("This string doesn't seem to be empty.");
+} else {
+  console.log('This string is definitely empty.');
+}
+
+let mood = 'sleepy';
+let tirednessLevel = 6;
+
+if (mood === "sleepy" && tirednessLevel > 8){
+  console.log("time to sleep")
+} else {
+  console.log("not bed time yet")
+}
+
 console.log(Math.random() * 100);
 
 let levelUp = 10;
@@ -5,15 +68,12 @@ let powerLevel = 9001;
 let multiplyMe = 32;
 let quarterMe = 1152;
 
-// Use the mathematical assignments in the space below:
 levelUp += 5;
 powerLevel -= 100;
 multiplyMe *= 11;
 quarterMe /= 4;
 
 
-// These console.log() statements below will help you check the values of the variables.
-// You do not need to edit these statements. 
 console.log('The value of levelUp:', levelUp); 
 console.log('The value of powerLevel:', powerLevel); 
 console.log('The value of multiplyMe:', multiplyMe); 
@@ -80,7 +140,4 @@ const laterYearsToll = laterYears * 4;
 const myAgeInDogYears = earlyYearsToll + laterYearsToll;
 
 console.log(`My name is ${myName}. I am ${myAge} years old in human years which is ${myAgeInDogYears} years old in dog years.`)
-
-
-
 
