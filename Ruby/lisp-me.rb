@@ -1,4 +1,3 @@
-
 puts "please enter some text i can lisp >  "
 
 user_input = gets.chomp
