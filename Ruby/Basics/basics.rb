@@ -72,7 +72,6 @@ print("What's the abbreviation of the state you are from?")
 state = gets.chomp
 state.upcase!
 puts "You are from #{state}!"
-# control flow
 
 print "Integer please: "
 user_num = Integer(gets.chomp)
