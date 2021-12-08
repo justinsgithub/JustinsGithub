@@ -33,7 +33,16 @@
 - Mathematical assignment operators make it easy to calculate a new value and assign it to the same variable
 - The typeof keyword returns a string with the data type of the passed value
 
-
+- if statement executes a task if specified condition evaluates to true.
+- if...else statements make binary decisions and execute different code blocks based on a provided condition.
+- add more conditions using else if statements.
+- comparison operators, including <, >, <=, >=, ===, and !== can compare two values.
+- && checks if both provided expressions are truthy.
+- || checks if either provided expression is truthy.
+-  ! switches the truthiness and falsiness of a value.
+- ? is shorthand to simplify concise if...else statements.
+- switch statement can be used to simplify the process of writing multiple else if statements
+-  switch statment break keyword stops the remaining cases from being checked and executed in a switch statement.
 
 
 
