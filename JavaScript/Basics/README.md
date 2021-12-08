@@ -23,3 +23,17 @@
 - We can access properties and methods by using the . dot operator
 - Built-in objects are collections of methods and properties
 
+
+- Variables hold reusable data in a program and associate it with a name
+- Variables are stored in memory.
+- The var keyword is used in pre-ES6 versions of JS.
+- let is the preferred way to declare a variable when it might be reassigned
+- const is the preferred way to declare a variable with a constant value
+- Variables that have not been initialized store the primitive data type undefined
+- Mathematical assignment operators make it easy to calculate a new value and assign it to the same variable
+- The typeof keyword returns a string with the data type of the passed value
+
+
+
+
+
