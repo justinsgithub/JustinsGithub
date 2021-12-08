@@ -14,4 +14,13 @@ def twice_as_large(num1, num2):
         return True
     return False
     
-def divisible_by_ten(
+def divisible_by_ten(num):
+    if not num % 10 == 0:
+        return False
+    return True
+
+def not_sum_to_ten(num1, num2):
+    if num1 + num2 == 10:
+        return False
+   return True
+
