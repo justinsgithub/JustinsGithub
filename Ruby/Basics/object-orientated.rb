@@ -1,3 +1,38 @@
+class Computer
+  @@users = {}
+  def initialize(username, password)
+    @username = username
+    @password = password
+    @files = {}
+    @@users[username] = password
+  end
+  
+  def Computer.get_users
+    return @@users
+  end
+
+  def create(filename)
+    time = Time.now
+    @files[filename] = time
+    puts "#{filename} was created at #{time} by #{@username}. "
+  end
+  
+  def delete(filename)
+    time = Time.now
+    @files.delete(filename)
+    puts "#{filename} was deleted at #{time} by #{@username}. "
+  end
+  def update(filename)
+    time = Time.now
+    @files[filename] = time
+    puts "#{filename} was updated at #{time} by #{@username}. "
+  end
+
+end
+
+my_computer = Computer.new("justinsname", "justinspass")
+
+
 class Message 
   @@messages_sent = 0
   def initialize(from, to)
