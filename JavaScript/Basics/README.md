@@ -109,3 +109,18 @@
 - objects are passed by reference
 - changes to an object passed into a function are permanent
 - iterate through objects using the for (let item in object) syntax
+
+- object that a method belongs to is the calling object
+- this refers to the calling object
+- this can be used to access properties of the calling object
+- methods do not automatically have access to other internal properties of the calling object.
+- value of this depends on where this is being accessed from.
+- cannot use arrow functions as methods to access calling object this
+- objects do not have built-in privacy
+- objects have naming conventions to communicate privacy
+- underscore before a property name means it should be treated as private
+- set and get methods are ways of working with private properties
+- factory functions creating object instances quickly and repeatedly
+- there are different ways to use object destructuring
+- a way of object destructuring is the property value shorthand 
+- destructured assignment is a way of object destructuring
