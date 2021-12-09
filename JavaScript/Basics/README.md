@@ -92,3 +92,10 @@
 - do...while loops run code at least once— only checking the stopping condition after the first execution
 - the break keyword allows programs to leave a loop during the execution of its block
 
+- abstraction allows writing complicated code in a cleaner way 
+- clean code is easy to reuse, debug, and understand for human readers
+- functions work the same way as any other type of data
+- functions can be reassigned to new variables
+- functions have properties and methods like any other object
+- functions can be passed into other functions as parameters
+- a higher-order function is a function that either accepts functions as parameters, returns a function, or both
