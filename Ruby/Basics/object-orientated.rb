@@ -1,3 +1,154 @@
+
+
+
+class Application
+  attr_accessor :status
+
+  public
+  def print_status
+    puts "All systems go!"
+  end
+  
+  private
+  def password
+    return 12345
+  end
+end
+
+module ThePresent
+    def now
+      puts "It's #{Time.new.hour > 12 ? Time.new.hour - 12 : Time.new.hour}:#{Time.new.min} #{Time.new.hour > 12 ? 'PM' : 'AM'} (GMT)."
+    end
+end
+
+class TheHereAnd
+  extend ThePresent
+end
+
+module MartialArts
+  def swordsman
+    puts "I'm a swordsman."
+  end
+end
+
+
+class Ninja
+  include MartialArts
+  def initialize(clan)
+    @clan = clan
+  end
+end
+
+class Samurai
+  include MartialArts
+  def initialize(shogun)
+    @shogun = shogun
+  end
+end
+
+
+module Action
+  def jump
+    @distance = rand(4) + 2
+    puts "I jumped forward #{@distance} feet!"
+  end
+end
+
+class Rabbit
+  include Action
+  attr_reader :name
+  def initialize(name)
+    @name = name
+  end
+end
+
+class Cricket
+  include Action
+  attr_reader :name
+  def initialize(name)
+    @name = name
+  end
+end
+
+peter = Rabbit.new("Peter")
+jiminy = Cricket.new("Jiminy")
+
+peter.jump
+jiminy.jump
+
+class Angle
+  include Math
+  attr_accessor :radians
+  
+  def initialize(radians)
+    @radians = radians
+  end
+  
+  def cosine
+    cos(@radians)
+  end
+end
+
+acute = Angle.new(1)
+acute.cosine
+
+
+module MyCircle
+  PI = 3.14159265358979323846
+end
+
+require "mycircle"
+puts MyCircle::PI
+puts Math::PI
+
+
+module MyLibrary
+  FAVE_BOOK = "Harry Potter"
+end
+
+class Person
+  attr_reader :name
+  attr_writer :favhoby
+  attr_accessor :job
+  def initialize(name, favhobby,job)
+    @name = name
+    @job = job
+    @favhobby = hobby
+  end
+end
+
+class Person
+  def initialize(name, job)
+    @name = name
+    @job = job
+  end
+  
+  def name
+    @name
+  end
+  
+  def job=(new_job)
+    @job = new_job
+  end
+end
+
+class Dog
+  def initialize(name, breed)
+    @name = name
+    @breed = breed
+  end
+
+  public
+  def bark
+    puts "Woof!"
+  end
+
+  private
+  def id
+    @id_number = 12345
+  end
+end
+
 class Computer
   @@users = {}
   def initialize(username, password)
