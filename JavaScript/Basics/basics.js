@@ -1,6 +1,3 @@
-
-
-
 const rapperArray = ["Lil' Kim", "Jay-Z", "Notorious B.I.G.", "Tupac"];
 
 for(let i = 0; i < rapperArray.length; i++){
