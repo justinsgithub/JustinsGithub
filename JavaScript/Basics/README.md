@@ -56,4 +56,10 @@
 
 - function definition can be made concise using concise arrow notation
 
-
+- scope defines where a variable is accessible from inside a program
+- Blocks are statements that exist within curly braces
+- a variable in 
+- global variables are accessible to the entire program / program context
+- local variables are variables that exist within block scope / the block of code they are assigned
+- global namespace is the space in our code that contains global data
+- scope pollution is when too many variables exist in a namespace / globally or variable names are reused.
