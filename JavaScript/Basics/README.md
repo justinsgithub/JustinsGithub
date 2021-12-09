@@ -82,3 +82,13 @@
 - arrays mutated inside of a function will stay changed outside the function
 - arrays can be nested inside other arrays
 - To access elements in nested arrays chain indices using bracket notation
+
+- loops perform repetitive actions so we don’t have to code that process manually every time
+- how to write for loops with an iterator variable that increments or decrements
+- how to use a for loop to iterate through an array
+- a nested for loop is a loop inside another loop
+- while loops allow for different types of stopping conditions
+- stopping conditions are crucial for avoiding infinite loops.
+- do...while loops run code at least once— only checking the stopping condition after the first execution
+- the break keyword allows programs to leave a loop during the execution of its block
+
