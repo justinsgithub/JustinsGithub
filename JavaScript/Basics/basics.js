@@ -1,5 +1,12 @@
+for(let i = 5; i < 11; i++){
+  console.log(i)
+}
 
+const x = [1,2,3]
 
+y = `it's as easy as  ${x.map(z => z.toString()).join(", ")}... I mean ${x.reverse().map(a => a.toString()).join(", ")}`
+
+console.log(y)
 
 const numberClusters = [[1,2], [3,4],[5,6]]
 
