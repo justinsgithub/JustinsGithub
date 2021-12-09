@@ -63,3 +63,22 @@
 - local variables are variables that exist within block scope / the block of code they are assigned
 - global namespace is the space in our code that contains global data
 - scope pollution is when too many variables exist in a namespace / globally or variable names are reused.
+
+- Arrays are lists that store data
+- Arrays are created with brackets
+- Each item inside of an array is at an index starting at 0
+- access item in array using its index
+- change item in an array using its index
+- Arrays have a length property
+- length property allows you to see how many items are in an array
+- Arrays have their own methods
+- Array methods include .push() .pop() .slice() .shift() 
+- Some built-in methods are mutating
+- mutating methods change the array
+- some array methods are not mutating
+- variables that contain arrays can be declared with let or const
+- Even when declared with const arrays are still mutable
+- an array variable declared with const cannot be reassigned
+- arrays mutated inside of a function will stay changed outside the function
+- arrays can be nested inside other arrays
+- To access elements in nested arrays chain indices using bracket notation
