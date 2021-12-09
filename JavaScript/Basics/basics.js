@@ -1,3 +1,38 @@
+const cards = ['diamond', 'spade', 'heart', 'club'];
+
+let currentCard;
+
+while(currentCard !== "spade"){
+  currentCard = cards[Math.floor(Math.random() * 4)];
+  console.log(currentCard)
+}
+
+
+const bobsFollowers = ["alex", "richard", "michael", "nick"]
+
+const tinasFollowers = ["alex","nicole","michael"]
+
+const mutualFollowers = []
+
+for (let x = 0; x < bobsFollowers.length; x++){
+  for (let y = 0; y < tinasFollowers.length; y++){
+    if(bobsFollowers[x] === tinasFollowers[y]){
+      mutualFollowers.push(bobsFollowers[x])
+    }
+  }
+}
+
+
+const vacationSpots = ['Bali', 'Paris', 'Tulum'];
+
+for(let i = 0; i < vacationSpots.length; i ++){
+  console.log(`I would love to visit ${vacationSpots[i]}`)
+}
+
+for (let counter = 3; counter >= 0; counter--){
+  console.log(counter);
+}
+
 for(let i = 5; i < 11; i++){
   console.log(i)
 }
