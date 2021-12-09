@@ -1,4 +1,3 @@
-
 // HIGH ORDER FUNCTIONS
 
 const timeFunctionRuntime = (functionParameter) => {
