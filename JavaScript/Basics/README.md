@@ -98,4 +98,14 @@
 - functions can be reassigned to new variables
 - functions have properties and methods like any other object
 - functions can be passed into other functions as parameters
-- a higher-order function is a function that either accepts functions as parameters, returns a function, or both
+- a higher-order function is a functions that accepts a function as parameters and / or returns a function
+
+- objects store collections of key-value pairs / properties
+- when an object property is a function, it is known as a method
+- an object literal is composed of comma-separated, key-value pairs 
+- access a property within an object by using dot operator or bracket notation
+- We can navigate nested objects by chaining dots or brackets
+- objects are mutable
+- objects are passed by reference
+- changes to an object passed into a function are permanent
+- iterate through objects using the for (let item in object) syntax
