@@ -4,7 +4,7 @@ export const projects = [
     description: "Automated social media interactions on adult website, using Selenium Python. Program gathers the top 8,000 users information in each state, and also follows up to 300 users on each run, gathers users data including gender, username, site user-id, and lifestyle. Follows up to 300 users on each run and likes 3 pictures of a different user every 1.5 seconds. ",
     image: '/images/2.png',
     tags: ['Mongo', 'Python'],
-    source: 'https://github.com/justinsgithub/JustinsGithub/tree/main/Pys/SocialAutomation',
+    source: 'https://github.com/justinsgithub/JustinsGithub/tree/main/Python/SocialAutomation',
     visit: '/images/sa5.png',
     id: 0,
   }
