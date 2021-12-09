@@ -1,3 +1,33 @@
+const city = "New York City"
+
+const logCitySkyline = () => {
+  let skyscraper = "Empire State Building";
+  return "The stars over the " + skyscraper + " in " + city;
+}
+
+console.log(logCitySkyline())
+
+const plantNeedsWater = day => day === 'Wednesday' ? true : false;
+
+
+const plantNeedsWater = (day) => {
+  if (day === 'Wednesday') {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const plantNeedsWater = function(day) {
+  if (day === 'Wednesday') {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+
+
 let athleteFinalPosition = 'first place';
 
 switch (athleteFinalPosition) {
