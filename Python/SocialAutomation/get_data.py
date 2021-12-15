@@ -14,7 +14,9 @@ import pymongo
 
 uri = my_vars["uri"]
 cluster = pymongo.MongoClient(uri)
-unitedStates_db = cluster["unitedStates"]
+united_states_db = cluster["unitedStates"]
+
+"""
 chrome_opts = Options()
 chrome_opts.add_argument("user-data-dir=seleniumuser2")
 driver = webdriver.Chrome(options=chrome_opts)
@@ -62,36 +64,31 @@ def get_state_data():
         state["completedCities"] = []
         state["scrapedAllCities"] = False
         
-        result = unitedStates_db[name].insert_one(state)
+        result = united_states_db[name].insert_one(state)
         print(result)
         
-login(driver, By, my_vars["username2"], my_vars["password2"])
-
-    
-get_state_data()    
+#login(driver, By, my_vars["username2"], my_vars["password2"])
 
 """
 
-this_state = "California"
-driver.get(f"{secrets.us_places}/{this_state}")
 
-united_states_database = cluster["UnitedStatesData"]
+def get_cities_data(state_name):
+    
+#    states = united_states_db.list_collection_names()
+    
+#    state_1 = states[0]
+    
+    print(f'getting cities data for {state_name}')
+    this_state = united_states_db[state_name].find_one({"name": state_name})
+    cityLinks = this_state["cityLinks"]
+    
+    for link in cityLinks:
+        print(link)
 
-state = "California"
-
-state_collection = united_states_database[state]
-
-
-def get_state(this_state):
-    try:
-        driver.get(f"{secrets.us_places}/{this_state}")
-        return True
-    except Exception:
-        print("error getting url, continue?")
-        confirm = input()
-        return False
+get_cities_data("California")
 
 
+"""
 def get_cities_data(this_state):
 
     if not this_state:
