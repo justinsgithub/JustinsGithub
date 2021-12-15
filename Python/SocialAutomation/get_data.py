@@ -80,10 +80,13 @@ def get_cities_data(state_name):
     
     print(f'getting cities data for {state_name}')
     this_state = united_states_db[state_name].find_one({"name": state_name})
-    cityLinks = this_state["cityLinks"]
+    city_links = this_state["cityLinks"]
     
-    for link in cityLinks:
+    
+    user_links = [f'{link}/{my_vars["users"]}' for link in city_links]
+    for link in user_links:
         print(link)
+    
 
 get_cities_data("California")
 
