@@ -10,6 +10,15 @@ def update_data(collection, thiskey, thisvalue, newkey, newvalue, isMany: bool):
         collection.update_one({thiskey: thisvalue}, {"$set": {newkey: newvalue}})
         print("data updated")
 
+def update_this(collection, thiskey, thisvalue, new_data: dict):
+    result = collection.update_one({thiskey: thisvalue}, {"$set": new_data})
+    print("data updated")
+    return result
+
+def update_these(collection, thiskey, thisvalue, new_data: dict):
+    result = collection.update_many({thiskey: thisvalue}, {"$set": new_data})
+    print("data updated")
+    return result
 
 def count_data(collection):
     data_count = collection.count_documents({})

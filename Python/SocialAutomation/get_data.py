@@ -11,6 +11,7 @@ from db import update_data
 from bot import login
 import helpers
 import pymongo
+import helpers
 
 uri = my_vars["uri"]
 cluster = pymongo.MongoClient(uri)
@@ -72,7 +73,7 @@ def get_state_data():
 """
 
 
-def get_cities_data(state_name):
+def get_cities_users_links(state_name):
     
 #    states = united_states_db.list_collection_names()
     
@@ -86,10 +87,24 @@ def get_cities_data(state_name):
     user_links = [f'{link}/{my_vars["users"]}' for link in city_links]
     for link in user_links:
         print(link)
+        
+    return user_links
     
 
-get_cities_data("California")
-
+def main(state_name):
+    cities_users_pages = get_cities_users_links(state_name)
+    
+    for user_page in cities_users_pages:
+        city = dict()
+        driver.get(user_page)
+        
+        result =  united_states_db[state_name].update_one(
+            {"name": state_name},
+            { "$addToSet": { colors: "mauve" } }
+                                              
+                                                          )
+        
+            
 
 """
 def get_cities_data(this_state):
