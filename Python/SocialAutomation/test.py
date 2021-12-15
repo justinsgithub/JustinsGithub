@@ -15,7 +15,7 @@ uri = my_vars["uri"]
 cluster = pymongo.MongoClient(uri)
 users = cluster["users"]
 
-
+"""
 def get_states(these_users):
     these_states = these_users.list_collection_names()
     print(these_states)
@@ -39,3 +39,4 @@ def get_states(these_users):
 
 
 get_states(users)
+"""

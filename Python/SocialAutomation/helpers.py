@@ -62,13 +62,13 @@ def delete_not_numbers(my_strings: str):
 
 
 def extract_numbers(my_strings: str):
-    number_string = re.sub("\D", "", my_strings)
+    my_string = my_strings.strip()
+    number_string = re.sub("\D", "", my_string)
     return int(number_string)
 
 
 def get_age(content: str):
-    return delete_not_numbers(get_this_word(content, 0))
-
+    return int(delete_not_numbers(get_this_word(content, 0)))
 
 def get_gender(content: str):
     return delete_numbers(get_this_word(content, 0))
