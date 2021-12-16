@@ -33,7 +33,7 @@ def get_state(state_name, these_users):
             return state
 
 
-def love_picture(pic_link, this_driver, By):
+def give_likes(pic_link, this_driver, By):
     this_driver.get(pic_link)
     if this_driver.title == my_vars["login_title"]:
         this_driver.quit()
@@ -56,7 +56,7 @@ def love_picture(pic_link, this_driver, By):
 
 def love_pictures(state, db_users, this_driver, By, current_user):
     count = 0
-    this_query = {current_user: False, "active": True, "fatalErr": False}
+    this_query = {current_user: False, "active": True, "fatalErr": False, "isMale": True}
     these_users = db_users[state].find(this_query)
     # list() may mutate objects!!
     for user in these_users:
@@ -112,7 +112,7 @@ def love_pictures(state, db_users, this_driver, By, current_user):
 
         if year < 40:
             for picture_link in picture_links:
-                love_picture(picture_link, this_driver, By)
+                give_likes(picture_link, this_driver, By)
 
             update_data(db_users[state], "_id", user["_id"], current_user,
                         True, False)

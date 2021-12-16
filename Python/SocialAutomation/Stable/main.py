@@ -21,8 +21,8 @@ driver = webdriver.Chrome(options=chrome_opts)
 
 login(driver, By, my_vars["username1"], my_vars["password1"])
 # wyoming
-#these_states = ["Wisconsin", "West Virginia", "Virginia", "Vermont"]
-these_states = [ "Missouri", "Iowa", "Massachusetts", "Tennessee"]
+# these_states = ["Massachusetts","Wisconsin", "West Virginia", "Virginia", "Vermont"]
+these_states = ["Missouri", "Iowa", "Tennessee"]
 for state in these_states:
     this_state = get_state(state, users)
     love_pictures(this_state, users, driver, By, my_vars["current_user_1"])
