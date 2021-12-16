@@ -2,27 +2,25 @@ import re
 from time import sleep
 
 import pymongo
-from selenium import webdriver
-from selenium.common import exceptions
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from constants import my_vars, my_selectors
+
+
+from constants import my_vars, my_selectors, user1, user2
 from db import update_data
-from bot import login, get_state, love_pictures
+import bot
 
 uri = my_vars["uri"]
 cluster = pymongo.MongoClient(uri)
 users = cluster["users"]
 
-chrome_opts = Options()
-chrome_opts.add_argument("user-data-dir=selenium")
-driver = webdriver.Chrome(options=chrome_opts)
+liked_pictures = user1["liked_pictures"]
 
+males_only = { liked_pictures: False, "active": True, "fatalErr": False, "isMale": True, }
 
-login(driver, By, my_vars["username1"], my_vars["password1"])
+bot.login(user1)
+
 # wyoming
 # these_states = ["Massachusetts","Wisconsin", "West Virginia", "Virginia", "Vermont"]
+
 these_states = ["Missouri", "Iowa", "Tennessee"]
 for state in these_states:
-    this_state = get_state(state, users)
-    love_pictures(this_state, users, driver, By, my_vars["current_user_1"])
+    bot.like_pictures(state, users, user1, males_only)

@@ -1,126 +1,196 @@
 import re
+
 from time import sleep
 
-from constants import my_vars, my_selectors, base_url
-from db import update_data
-import helpers
+from selenium import webdriver
+
+from selenium.common import exceptions
+
+from selenium.webdriver.chrome.options import Options
+
+from selenium.webdriver.common.by import By
+
+from constants import my_vars, my_selectors, base_url, user1, user2
+
+import helpers as h
+
+import check_errors as ce
+
+chrome_opts = Options()
+
+chrome_opts.add_argument("user-data-dir=selenium")
+
+driver = webdriver.Chrome(options=chrome_opts)
 
 
-def login(this_driver, By, username, password):
+def login(user):
+
     username_in = my_selectors["username_in"]
+
     password_in = my_selectors["password_in"]
+
     login_button = my_selectors["login_button"]
-    this_driver.maximize_window()
-    this_driver.get(my_vars["home_page"])
-    sleep(5)
-    if not this_driver.title == my_vars["login_title"]:
+
+    driver.maximize_window()
+
+    driver.get(my_vars["home_page"])
+
+    sleep(3)
+
+    if not driver.title == my_vars["login_title"]:
+
         return
 
-    username_input = this_driver.find_element(By.XPATH, username_in)
-    password_input = this_driver.find_element(By.XPATH, password_in)
-    log_button = this_driver.find_element(By.XPATH, login_button)
-    username_input.send_keys(username)
-    password_input.send_keys(password)
+    username_input = driver.find_element(By.XPATH, username_in)
+
+    password_input = driver.find_element(By.XPATH, password_in)
+
+    log_button = driver.find_element(By.XPATH, login_button)
+
+    username_input.send_keys(user["username"])
+
+    password_input.send_keys(user["password"])
+
     log_button.click()
-    sleep(5)
+
+    sleep(3)
     
-def get_state(state_name, these_users):
-    these_states = these_users.list_collection_names()
-    print(these_states)
 
-    for state in these_states:
-        if state == state_name:
-            return state
+def click_likes():
 
-
-def give_likes(pic_link, this_driver, By):
-    this_driver.get(pic_link)
-    if this_driver.title == my_vars["login_title"]:
-        this_driver.quit()
-        quit()
-    sleep(1)
-    this_driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    sleep(1)
     try:
-        love_links = this_driver.find_elements(By.LINK_TEXT, "Love")
-        num_comments = 0
+
+        love_links = driver.find_elements(By.LINK_TEXT, "Love")
+
         for love_link in love_links:
-            this_driver.execute_script("arguments[0].click();", love_link)
-            num_comments += 1
+
+            driver.execute_script("arguments[0].click();", love_link)
+
             sleep(0.2)
-        print(f"liked {num_comments} comments")
+
     except Exception:
-        print("ERROR CLICKING LINK")
+
+        ce.unknown_err(driver)
+        
+
+def give_likes(pic_link):
+
+    driver.get(pic_link)
+
+    ce.login_title(driver)
+
+    sleep(1)
+
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+    sleep(1)
+
+    click_likes()
+    
+
+def get_pictures_link(site_user):
+
+    try:
+
+        driver.get(site_user["pictureLink"])
+
         sleep(1.0)
 
+        ce.login_title(driver)
 
-def love_pictures(state, db_users, this_driver, By, current_user):
+    except Exception:
+
+        ce.unknown_err(driver)
+        
+
+def print_confirmation(site_user):
+
+    p1 = f'getting user {site_user["userName"]} age {site_user["age"]}'
+
+    p2 = f'gender {site_user["gender"]} from state {site_user["state"]}'
+
+    print(p1, p2)
+    
+
+def like_pictures(state, db_users, this_user, this_query):
+
+    liked_pictures = this_user["liked_pictures"]
+
     count = 0
-    this_query = {current_user: False, "active": True, "fatalErr": False, "isMale": True}
+
+
     these_users = db_users[state].find(this_query)
+
     # list() may mutate objects!!
+
     for user in these_users:
-        p1 = f'getting user {user["userName"]} age {user["age"]}'
-        p2 = f'gender {user["gender"]} from state {user["state"]}'
-        if count == 200:
-            print("hit 200 quitting now")
-            this_driver.quit()
-            quit()
-        #if user["gender"] == "M":
+
+        print_confirmation(user)
+
+        ce.count_200(driver, count)
+
         count += 1
-        print(p1, p2)
-        try:
-            this_driver.get(user["pictureLink"])
-            if this_driver.title == my_vars["login_title"]:
-                this_driver.quit()
-                quit()
-            sleep(1.0)
-        except Exception:
-            print("unknown error, continue?")
-            this_driver.quit()
-            quit()
-            sleep(1.0)
+
+        get_pictures_link(user)
 
         picture_link_selector = my_selectors["picture_link_selector"]
-        picture_elements = this_driver.find_elements(By.XPATH,
-                                                picture_link_selector)
+
+        picture_elements = driver.find_elements(By.XPATH, picture_link_selector)
 
         picture_links = [el.get_attribute("href") for el in picture_elements]
 
         if len(picture_links) == 0:
+
             print("NO PICTURES OR COULD NOT FIND PAGE, PASSING")
-            update_data(db_users[state], "_id", user["_id"], "fatalErr", True,
-                        False)
+
+            update = {"fatalErr": True}
+
+            h.update_this(db_users[state], "_id", user["_id"], update)
 
             continue
 
         if len(picture_links) > 3:
+
             picture_links = [picture_links[x] for x in range(3)]
 
         try:
-            this_driver.get(picture_links[0])
-            if this_driver.title == my_vars["login_title"]:
-                this_driver.quit()
-                quit()
+
+            driver.get(picture_links[0])
+
+            ce.login_title(driver)
+
         except Exception:
+
             continue
 
-        last_post = this_driver.find_element(
-            By.XPATH, '//*[@id="ptr-main-element"]//div/main//a/time').text
-        year = helpers.last_number_in_string(last_post)
+        last_post = driver.find_element(
+
+            By.XPATH, '//*[@id="ptr-main-element"]//div/main//a/time'
+
+        ).text
+
+        year = h.last_number_in_string(last_post)
+
         print(f"last post was {last_post}")
 
         if year < 40:
-            for picture_link in picture_links:
-                give_likes(picture_link, this_driver, By)
 
-            update_data(db_users[state], "_id", user["_id"], current_user,
-                        True, False)
+            for picture_link in picture_links:
+
+                give_likes(picture_link)
+
+            liked_update = {liked_pictures: True}
+
+            h.update_this(db_users[state], "_id", user["_id"], liked_update)
 
         else:
-            print("last post older than 2020, passing")
-            update_data(db_users[state], "_id", user["_id"], "active", False,
-                        False)
 
-        update_data(db_users[state], "_id", user["_id"], "lastPicturePost",
-                    year, False)
+            print("last post older than 2020, passing")
+
+            active_update = {"active": False}
+
+            h.update_this(db_users[state], "_id", user["_id"], active_update)
+
+        last_post_update = {"lastPicturePost": year}
+
+        h.update_this(db_users[state], "_id", user["_id"], last_post_update)
