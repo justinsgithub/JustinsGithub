@@ -1,5 +1,3 @@
-#!/bin/python3
-
 
 def update_data(collection, thiskey, thisvalue, newkey, newvalue, isMany: bool):
     if isMany:

@@ -72,3 +72,32 @@ def get_age(content: str):
 
 def get_gender(content: str):
     return delete_numbers(get_this_word(content, 0))
+
+
+def update_this(collection, thiskey, thisvalue, new_data: dict):
+    result = collection.update_one({thiskey: thisvalue}, {"$set": new_data})
+    print("data updated")
+    return result
+
+def update_these(collection, thiskey, thisvalue, new_data: dict):
+    result = collection.update_many({thiskey: thisvalue}, {"$set": new_data})
+    print("data updated")
+    return result
+
+def count_data(collection):
+    data_count = collection.count_documents({})
+    print(data_count)
+    return data_count
+
+
+def increment_this(collection, querykey, queryvalue, incKey, incVal: int):
+    print("incrementing data in query")
+    collection.update_one({querykey: queryvalue}, {"$inc": {incKey: incVal}})
+    print("data updated")
+
+def increment_these(
+    collection, querykey, queryvalue, inckey, incVal:int):
+    if isMany:
+        print("incrementing data in query")
+        collection.update_many({querykey: queryvalue}, {"$inc": {incKey: incVal}})
+        print("data updated")

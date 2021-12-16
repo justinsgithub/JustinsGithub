@@ -1,27 +1,26 @@
 import re
-from time import sleep
+import helpers
+import pymongo
 
+
+from time import sleep
 from selenium import webdriver
 from selenium.common import exceptions
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
 from constants import my_vars, my_selectors, base_url
-from db import update_data
 from bot import login
-import helpers
-import pymongo
-import helpers
 
 uri = my_vars["uri"]
 cluster = pymongo.MongoClient(uri)
 united_states_db = cluster["unitedStates"]
+city_data_db = cluster["CitiesData"]
 
-"""
+united_states_users_data = cluster["UnitedStatesUsersData"]
+
 chrome_opts = Options()
 chrome_opts.add_argument("user-data-dir=seleniumuser2")
 driver = webdriver.Chrome(options=chrome_opts)
-
 
 
 def get_state_data():
@@ -67,97 +66,79 @@ def get_state_data():
         
         result = united_states_db[name].insert_one(state)
         print(result)
-        
-#login(driver, By, my_vars["username2"], my_vars["password2"])
 
-"""
-
-
-def get_cities_users_links(state_name):
+def get_completed_city_links(state_name):
+    this_state = united_states_db[state_name].find_one({"name": state_name})
+    completed_cities = this_state["completedCities"]
+    return completed_cities
     
-#    states = united_states_db.list_collection_names()
-    
-#    state_1 = states[0]
+def get_cities_user_pages(state_name):
     
     print(f'getting cities data for {state_name}')
     this_state = united_states_db[state_name].find_one({"name": state_name})
     city_links = this_state["cityLinks"]
-    
+    completed_city_links = get_completed_city_links(state_name)
+    print(f"{len(completed_city_links)} completed city links")
     
     user_links = [f'{link}/{my_vars["users"]}' for link in city_links]
-    for link in user_links:
-        print(link)
+    
+    user_pages = [link for link in user_links if not link in completed_city_links]
         
-    return user_links
+    return user_pages
     
 
-def main(state_name):
-    cities_users_pages = get_cities_users_links(state_name)
+def get_city_data(state_name):
+    cities_user_pages = get_cities_user_pages(state_name)
     
-    for user_page in cities_users_pages:
+    
+    for cities_users in cities_user_pages:
+        driver.get(cities_users)
+        sleep(1)
         city = dict()
-        driver.get(user_page)
-        
-        result =  united_states_db[state_name].update_one(
-            {"name": state_name},
-            { "$addToSet": { colors: "mauve" } }
-                                              
-                                                          )
-        
-            
 
-"""
-def get_cities_data(this_state):
-
-    if not this_state:
-        return
-
-    city_elements = driver.find_elements(By.XPATH, '//div[@class="mw8 nl2 nr2"]//a')
-
-    for city_element in city_elements:
         users_per_page = 20
         max_pages = 450
 
-        city_name = city_element.text
+        number_of_users_text = driver.find_element(
+            By.XPATH, my_selectors["num_users_selector"]
+        ).text
+        number_of_users = helpers.extract_numbers(number_of_users_text)        
+        city_name = driver.find_element(By.XPATH, my_selectors["city_name_selector"]).text
 
-        city_link = city_element.get_attribute("href")
-
-        city_users_link = city_link + "/kinksters"
-
-        city_data = dict()
-
-        driver.get(city_users_link)
-
-        number_of_users_span = driver.find_element(
-            By.XPATH, my_selectors["number_of_users_span_selector"]
-        )
-
-        number_of_users_text = number_of_users_span.text
-
-        number_of_users = helpers.extract_numbers(number_of_users_text)
-        print("number of users", number_of_users)
-
-        pages_to_scrape = number_of_users / 20
-        print("pages to scrape", pages_to_scrape)
+        pages_to_scrape = number_of_users / users_per_page
+        
+        print("pages to scrape ", pages_to_scrape)
 
         if pages_to_scrape > 450:
             pages_to_scrape = 450
 
-        city_data["name"] = location_name
-        city_data["usersLink"] = location_data
-        city_data["numberOfUsers"] = number_of_users
-        city_data["scrapedPages"] = 0
-        city_data["pagesToScrape"] = pages_to_scrape
+        
+        city["name"] = city_name
+        city["totalUsers"] = number_of_users
+        city["pagesToScrape"] = int(pages_to_scrape)
+        city["pagesScraped"] = 1        
+        city["usersLink"] = cities_users
+        city["completedScraping"] = False
+                
+                
+        state_collection = city_data_db[state_name]
+        
+        print(city)
 
-        print(city_data)
-        # state_collection.insert_one(city_data)
-
-
-
-
-def scrape_user_page(state):
+        result1 = state_collection.insert_one(city)
+        print(f"finished inserting {city}, into {state_name} result = ",result1)
+        
+        result2 =  united_states_db[state_name].update_one(
+            {"name": state_name},
+            { "$addToSet": { "completedCities" : cities_users } }
+            )
+        
+        print(f"added {city_name} to scraped cities for {state_name}, result = ", result2)
+    
+    
+def scrape_user_page(state_name, city_name):
     user_details_elements = driver.find_elements(By.XPATH, secrets.user_details_selector)
-    view_picture_elements = driver.find_elements(By.XPATH,secrets.view_pictures_selector)
+    view_picture_elements = driver.find_elements(By.XPATH, secrets.view_pictures_selector)
     username_elements = driver.find_elements(By.XPATH, secrets.user_name_selector)
 
 
@@ -191,22 +172,43 @@ def scrape_user_page(state):
         user["jLikedPictures"] = False
         user["lLikedPictures"] = False
         user["xLikedPictures"] = False
-        user["state"] = state
-        
-        insert_data(secrets.users[state], user)
-        print(user)
+        user["city"] = city_name
+        user["state"] = state_name
+        user["active"] = True
+        user["fatalErr"] = False
+    
+        print(user)    
+    
+        result = united_states_users_data[city_name].insert_one(user)
+        print(result)
 
-def get_user_pages():
-    states = secrets.locations.find({})
-    for state in states:
-        print(state)
-        start_page = state["scrapedPages"] + 1
-        end_page = 450
+
+def scrape_city_users(state_name:str):
+    cities_to_scrape = city_data_db[state_name].find({"completedScraping": False})
+    for city in cities_to_scrape:
+        print(city)
+        start_page = city["scrapedPages"] + 1
+        end_page = city["pagesToScrape"]
+        
+        if start_page >= end_page:
+            result =  city_data_db[state_name].update_one(
+                {"_id": city["_id"]}, { "completedScraping" : True })            
+            
+            continue
+   
         for x in range(start_page, end_page):
-            sleep(5)
-            page = state[userUrl] + pa + str(x)
-            driver.get(page)
-            scrape_user_page(state["name"])
-            increment_data(secrets.locations, "name", state["name"], "scrapedPages", 1,
-                           False)
-"""
+            
+            page_to_get = f'{city["usersLink"]}?page={str(x)}'
+            driver.get(page_to_get)
+            sleep(1)
+            scrape_user_page(state_name, city["name"])
+            helpers.increment_data(united_states_db[state_name], "name", city["name"], "scrapedPages", 1)
+
+def main():
+    
+    states = united_states_db.list_collection_names()
+
+    login(driver, By, my_vars["username2"], my_vars["password2"])
+    
+    for state in states:
+        get_city_data(state) 

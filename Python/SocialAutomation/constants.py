@@ -72,5 +72,8 @@ my_selectors = {
     "num_users_selector" : '//*[@id="ptr-main-element"]/header/div/nav/div/a[2]//span',
     
     "num_cities_selector" : '//*[@id="ptr-main-element"]/header/div/nav/div/a[5]//span',
+    
+    "city_name_selector" : '//h1[@class="mv0 f4 f25-ns fw7 lh-copy tl secondary breakword"]',
+    
 }
 

@@ -13,7 +13,7 @@ import pymongo
 
 uri = my_vars["uri"]
 cluster = pymongo.MongoClient(uri)
-users = cluster["users"]
+united_states_db = cluster["unitedStates"]
 
 """
 def get_states(these_users):
@@ -40,3 +40,34 @@ def get_states(these_users):
 
 get_states(users)
 """
+
+def get_completed_city_links(state_name):
+    this_state = united_states_db[state_name].find_one({"name": state_name})
+    completed_cities = this_state["completedCities"]
+    return completed_cities
+
+
+def get_cities_user_pages(state_name):
+    
+#    states = united_states_db.list_collection_names()
+#    state_1 = states[0]
+    
+    print(f'getting cities data for {state_name}')
+    this_state = united_states_db[state_name].find_one({"name": state_name})
+    print(this_state)
+    city_links = this_state["cityLinks"]
+    completed_city_links = get_completed_city_links(state_name)
+    print(f"{len(completed_city_links)} completed city links")
+
+    
+    
+    user_links = [f'{link}/{my_vars["users"]}' for link in city_links]
+    
+    user_pages = [link for link in user_links if not link in completed_city_links]
+    
+    #for link in user_links:
+    #    print(link)
+        
+    return user_pages
+
+get_cities_user_pages("California")
