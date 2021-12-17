@@ -1,4 +1,4 @@
-from constants import my_vars
+from secrets import my_vars
 
 def login_title(wdriver):
 
@@ -25,3 +25,4 @@ def unknown_err(wdriver):
     wdriver.quit()
 
     quit()
+

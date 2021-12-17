@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.options import Options
 
 from selenium.webdriver.common.by import By
 
-from constants import my_vars, my_selectors, base_url, user1, user2
+from secrets import my_vars, my_selectors, base_url, user1, user2
 
 import helpers as h
 
@@ -54,24 +54,24 @@ def login(user):
     log_button.click()
 
     sleep(3)
-    
+
 
 def click_likes():
 
     try:
 
-        love_links = driver.find_elements(By.LINK_TEXT, "Love")
+        likes = driver.find_elements(By.LINK_TEXT, my_vars["like"])
 
-        for love_link in love_links:
+        for like in likes:
 
-            driver.execute_script("arguments[0].click();", love_link)
+            driver.execute_script("arguments[0].click();", like)
 
             sleep(0.2)
 
     except Exception:
 
         ce.unknown_err(driver)
-        
+
 
 def give_likes(pic_link):
 
@@ -86,7 +86,7 @@ def give_likes(pic_link):
     sleep(1)
 
     click_likes()
-    
+
 
 def get_pictures_link(site_user):
 
@@ -101,7 +101,7 @@ def get_pictures_link(site_user):
     except Exception:
 
         ce.unknown_err(driver)
-        
+
 
 def print_confirmation(site_user):
 
@@ -110,14 +110,13 @@ def print_confirmation(site_user):
     p2 = f'gender {site_user["gender"]} from state {site_user["state"]}'
 
     print(p1, p2)
-    
+
 
 def like_pictures(state, db_users, this_user, this_query):
 
     liked_pictures = this_user["liked_pictures"]
 
     count = 0
-
 
     these_users = db_users[state].find(this_query)
 
@@ -135,7 +134,8 @@ def like_pictures(state, db_users, this_user, this_query):
 
         picture_link_selector = my_selectors["picture_link_selector"]
 
-        picture_elements = driver.find_elements(By.XPATH, picture_link_selector)
+        picture_elements = driver.find_elements(
+            By.XPATH, picture_link_selector)
 
         picture_links = [el.get_attribute("href") for el in picture_elements]
 
@@ -164,10 +164,7 @@ def like_pictures(state, db_users, this_user, this_query):
             continue
 
         last_post = driver.find_element(
-
-            By.XPATH, '//*[@id="ptr-main-element"]//div/main//a/time'
-
-        ).text
+            By.XPATH, my_selectors["last_post"]).text
 
         year = h.last_number_in_string(last_post)
 
