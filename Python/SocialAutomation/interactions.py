@@ -22,14 +22,30 @@ chrome_opts.add_argument("user-data-dir=selenium")
 
 driver = webdriver.Chrome(options=chrome_opts)
 
+def find_this_x(description:str):
+    return driver.find_element(By.XPATH, description)
+
+def find_these_x(description:str):
+    return driver.find_elements(By.XPATH, description)
+
+def find_this_xtext(description:str):
+    return driver.find_element(By.XPATH, description).text
+
+def find_this_link(description:str):
+    return driver.find_element(By.LINK_TEXT, description)
+
+def find_these_links(description:str):
+    return driver.find_elements(By.LINK_TEXT, description)
+
+def jsclick(target):
+    driver.execute_script("arguments[0].click();", like)
+    
+def scroll_to_bottom():
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+
 
 def login(user):
-
-    username_in = my_selectors["username_in"]
-
-    password_in = my_selectors["password_in"]
-
-    login_button = my_selectors["login_button"]
 
     driver.maximize_window()
 
@@ -41,11 +57,11 @@ def login(user):
 
         return
 
-    username_input = driver.find_element(By.XPATH, username_in)
+    username_input = find_this_x(my_selectors["username_in"])
 
-    password_input = driver.find_element(By.XPATH, password_in)
+    password_input = find_this_x(my_selectors["password_in"])
 
-    log_button = driver.find_element(By.XPATH, login_button)
+    log_button = find_this_x(my_selectors["login_button"])
 
     username_input.send_keys(user["username"])
 
@@ -60,12 +76,12 @@ def click_likes():
 
     try:
 
-        likes = driver.find_elements(By.LINK_TEXT, my_vars["like"])
+        likes = find_these_links(my_vars["like"])
 
         for like in likes:
 
-            driver.execute_script("arguments[0].click();", like)
-
+            jsclick(like)
+            
             sleep(0.2)
 
     except Exception:
@@ -81,8 +97,8 @@ def give_likes(pic_link):
 
     sleep(1)
 
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
+    scroll_to_bottom()
+    
     sleep(1)
 
     click_likes()
@@ -120,8 +136,6 @@ def like_pictures(state, db_users, this_user, this_query):
 
     these_users = db_users[state].find(this_query)
 
-    # list() may mutate objects!!
-
     for user in these_users:
 
         print_confirmation(user)
@@ -134,8 +148,7 @@ def like_pictures(state, db_users, this_user, this_query):
 
         picture_link_selector = my_selectors["picture_link_selector"]
 
-        picture_elements = driver.find_elements(
-            By.XPATH, picture_link_selector)
+        picture_elements = find_these_x(picture_link_selector)
 
         picture_links = [el.get_attribute("href") for el in picture_elements]
 
@@ -163,8 +176,7 @@ def like_pictures(state, db_users, this_user, this_query):
 
             continue
 
-        last_post = driver.find_element(
-            By.XPATH, my_selectors["last_post"]).text
+        last_post = find_this_xtext(my_selectors["last_post"])
 
         year = h.last_number_in_string(last_post)
 

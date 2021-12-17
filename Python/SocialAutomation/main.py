@@ -8,7 +8,7 @@ from secrets import my_vars, my_selectors, user1, user2
 
 from db import update_data
 
-import bot
+import interactions as i
 
 uri = my_vars["uri"]
 
@@ -20,7 +20,7 @@ liked_pictures = user1["liked_pictures"]
 
 males_only = { liked_pictures: False, "active": True, "fatalErr": False, "isMale": True, }
 
-bot.login(user1)
+i.login(user1)
 
 # wyoming
 
@@ -30,5 +30,5 @@ these_states = ["Missouri", "Iowa", "Tennessee"]
 
 for state in these_states:
 
-    bot.like_pictures(state, users, user1, males_only)
+    i.like_pictures(state, users, user1, males_only)
 

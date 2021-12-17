@@ -131,4 +131,3 @@ def increment_these(
         collection.update_many({querykey: queryvalue}, {"$inc": {incKey: incVal}})
 
         print("data updated")
-

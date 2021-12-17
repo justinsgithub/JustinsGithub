@@ -16,8 +16,42 @@ username = getuser()
 
 app = typer.Typer()
 
-@app.command()
 
+@app.command()
+def countCityData():
+
+    db = client["CitiesData"]
+
+    collection_names = db.list_collection_names()
+
+    data_count = 0
+
+    number_of_states = len(collection_names)
+
+    for collection_name in collection_names:
+
+        collection = db[collection_name]
+
+        data_count += collection.count_documents({})
+
+    average_cities_per_state = int(data_count / number_of_states)
+
+    spacestart  = """
+    
+    """
+    spaceend  = """
+    
+    """
+    output1 = f"          we have data for {data_count} cities for an "
+
+    output2 = f"average {average_cities_per_state} cities per state"
+
+    output = spacestart + output1 + output2 + spaceend
+
+    typer.secho(output, fg="green")
+
+
+@app.command()
 def delete(db_name, collection_name, this_key, this_value):
 
     db = client[db_name]
@@ -30,8 +64,8 @@ def delete(db_name, collection_name, this_key, this_value):
 
     typer.secho(result, fg="red")
 
-@app.command()
 
+@app.command()
 def find(db_name, collection_name, this_key, this_value):
 
     db = client[db_name]
@@ -44,8 +78,8 @@ def find(db_name, collection_name, this_key, this_value):
 
     typer.secho(result, fg="red")
 
-@app.command()
 
+@app.command()
 def update(db_name, collection_name, query_key, query_value, new_key, new_value):
 
     db = client[db_name]
@@ -60,8 +94,8 @@ def update(db_name, collection_name, query_key, query_value, new_key, new_value)
 
     typer.secho(f"inserted new data, result object = {result}", fg="green")
 
-@app.command()
 
+@app.command()
 def insert(db_name, collection_name, this_key, this_value):
 
     db = client[db_name]
@@ -72,8 +106,8 @@ def insert(db_name, collection_name, this_key, this_value):
 
     typer.secho(f"inserted new data, result object = {result}", fg="green")
 
-@app.command()
 
+@app.command()
 def databases(col: bool = False):
 
     database_list = client.list_database_names()
@@ -96,8 +130,8 @@ def databases(col: bool = False):
 
     typer.secho(database_list, fg="green")
 
-@app.command()
 
+@app.command()
 def collections(database_name, col: bool = False):
 
     database_list = client.list_database_names()
@@ -132,7 +166,7 @@ def collections(database_name, col: bool = False):
 
     typer.secho(db_collections, fg="green")
 
+
 if __name__ == "__main__":
 
     app()
-
