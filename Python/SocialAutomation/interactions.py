@@ -22,37 +22,45 @@ chrome_opts.add_argument("user-data-dir=seleniumuser2")
 
 driver = webdriver.Chrome(options=chrome_opts)
 
-def find_this_x(description:str):
+
+def find_this_x(description: str):
     return driver.find_element(By.XPATH, description)
 
-def find_these_x(description:str):
+
+def find_these_x(description: str):
     return driver.find_elements(By.XPATH, description)
 
-def find_this_xtext(description:str):
+
+def find_this_xtext(description: str):
     return driver.find_element(By.XPATH, description).text
 
-def find_these_xtext(description:str):
+
+def find_these_xtext(description: str):
     els = driver.find_elements(By.XPATH, description)
     return [el.text for el in els]
 
-def find_these_xhref(description:str):
+
+def find_these_xhref(description: str):
     els = driver.find_elements(By.XPATH, description)
     return [el.get_attribute("href") for el in els]
 
-def find_this_link(description:str):
+
+def find_this_link(description: str):
     return driver.find_element(By.LINK_TEXT, description)
 
-def find_these_links(description:str):
-    return driver.find_elements(By.LINK_TEXT, description)
 
+def find_these_links(description: str):
+    return driver.find_elements(By.LINK_TEXT, description)
 
 
 def jsclick(this_target):
     driver.execute_script("arguments[0].click();", this_target)
-    
+    sleep(0.2)
+
+
 def scroll_to_bottom():
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
+    sleep(1)
 
 
 def login(user):
@@ -85,52 +93,45 @@ def login(user):
 def click_likes():
 
     try:
-
         likes = find_these_links(my_vars["like"])
 
         for like in likes:
 
             jsclick(like)
-            
-            sleep(0.2)
+
+        sleep(1)
 
     except Exception:
-
-        ce.unknown_err(driver)
+        sleep(1)
+        return
 
 
 def give_likes(pic_link):
+    try:
+        driver.get(pic_link)
 
-    driver.get(pic_link)
+        ce.login_title(driver)
 
-    ce.login_title(driver)
+        sleep(1)
 
-    sleep(1)
+        scroll_to_bottom()
 
-    scroll_to_bottom()
-    
-    sleep(1)
+        click_likes()
 
-    click_likes()
-
-    sleep(1)
+        sleep(1)
+    except Exception:
+        return
 
 
 def get_picture_links(site_user):
 
-    try:
+    driver.get(site_user["pictureLink"])
 
-        driver.get(site_user["pictureLink"])
+    sleep(1.0)
 
-        sleep(1.0)
+    ce.login_title(driver)
 
-        ce.login_title(driver)
-
-        return find_these_xhref(my_selectors["picture_link_selector"])
-
-    except Exception:
-
-        ce.unknown_err(driver)
+    return find_these_xhref(my_selectors["picture_link_selector"])
 
 
 def print_confirmation(site_user):
@@ -142,14 +143,13 @@ def print_confirmation(site_user):
     print(p1, p2)
 
 
-
 def like_pictures(state, db_users, this_user):
 
     liked_pictures = this_user["liked_pictures"]
 
     this_query = {liked_pictures: False, "active": True,
-              "fatalErr": False}
- 
+                  "fatalErr": False}
+
     count = 0
 
     these_users = db_users[state].find(this_query)
@@ -158,7 +158,7 @@ def like_pictures(state, db_users, this_user):
 
         if user["gender"] == "M" or user["gender"] == "F":
             continue
-        
+
         print_confirmation(user)
 
         ce.count_200(driver, count)
@@ -203,29 +203,22 @@ def like_pictures(state, db_users, this_user):
 
                 give_likes(picture_link)
 
-            liked_update = {liked_pictures: True}
-
-            h.update_this(db_users[state], "_id", user["_id"], liked_update)
-
-        else:
-
+        if year > 40:
             print("LAST POST OLDER THAN 2020, ONLY LIKING THIS PIC")
 
             scroll_to_bottom()
-            
-            sleep(1)
 
             click_likes()
 
-            sleep(1)
-
             active_update = {"active": False}
 
-            h.update_this(db_users[state], "_id", user["_id"], active_update)
+            h.update_this(db_users[state], "_id",
+                          user["_id"], active_update)
 
-            liked_update = {liked_pictures: True}
+        liked_update = {liked_pictures: True}
 
-            h.update_this(db_users[state], "_id", user["_id"], liked_update)
+        h.update_this(db_users[state], "_id",
+                      user["_id"], liked_update)
 
         last_post_update = {"lastPicturePost": year}
 
