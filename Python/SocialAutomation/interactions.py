@@ -20,7 +20,7 @@ chrome_options = Options()
 
 chrome_options.add_argument("user-data-dir=seleniumuser2")
 
-driver = webdriver.Chrome(options=chrome_opts)
+driver = webdriver.Chrome(options=chrome_options)
 
 
 def find_this_x(description: str):
@@ -147,8 +147,7 @@ def like_pictures(state, db_users, this_user):
 
     liked_pictures = this_user["liked_pictures"]
 
-    this_query = {liked_pictures: False, "active": True,
-                  "fatalErr": False}
+    this_query = {liked_pictures: False, "active": True, "fatalErr": False}
 
     count = 0
 
@@ -212,13 +211,11 @@ def like_pictures(state, db_users, this_user):
 
             active_update = {"active": False}
 
-            h.update_this(db_users[state], "_id",
-                          user["_id"], active_update)
+            h.update_this(db_users[state], "_id", user["_id"], active_update)
 
         liked_update = {liked_pictures: True}
 
-        h.update_this(db_users[state], "_id",
-                      user["_id"], liked_update)
+        h.update_this(db_users[state], "_id", user["_id"], liked_update)
 
         last_post_update = {"lastPicturePost": year}
 

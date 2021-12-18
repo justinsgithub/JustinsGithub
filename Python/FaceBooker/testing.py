@@ -27,7 +27,7 @@ chrome_options.add_experimental_option("prefs", prefs)
 
 chrome_options.add_argument("user-data-dir=seleniumfacebook")
 
-chrome_options.add_argument("--headless")
+#chrome_options.add_argument("--headless")
 
 driver = webdriver.Chrome(options=chrome_options)
 
@@ -35,6 +35,7 @@ driver.maximize_window()
 
 username = getuser()
 
+#x = driver.find_elements(By.XPATH, '//a[@class="oajrlxb2 g5ia77u1 qu0x051f esr5mh6w e9989ue4 r7d6kgcz rq0escxv nhd2j8a9 nc684nl6 p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso i1ao9s8h esuyzwwr f1sip0of lzcic4wl gpro0wi8 m9osqain b1v8xokw"]')
 
 onyourmind_class = "oajrlxb2 qu0x051f esr5mh6w e9989ue4 r7d6kgcz rq0escxv nhd2j8a9 p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x i1ao9s8h esuyzwwr f1sip0of abiwlrkh p8dawk7l lzcic4wl bp9cbjyn b3i9ofy5 orhb3f3m czkt41v7 fmqxjp7s emzo65vh j83agx80 btwxx1t3 buofh1pr jifvfom9 l9j0dhe7 idiwt2bm kbf60n1y cxgpxx05 d1544ag0 sj5x9vvc tw6a2znq"
 onyourmind_class2 = (
@@ -53,7 +54,8 @@ xpaths = {
     "password_input": '//*[@id="pass"]',
     "login_button": '//button[@type="submit"][1]',
     "onyourmind": f'//div[@class="{onyourmind_class}"][@role="button"]',
-    "input_box": '//div[@style="outline: none; user-select: text; white-space: pre-wrap; overflow-wrap: break-word;"][@role="textbox"][@contenteditable="true"]',
+    "input_box":
+    '//div[@style="outline: none; user-select: text; white-space: pre-wrap; overflow-wrap: break-word;"][@role="textbox"][@contenteditable="true"]',
     "post_button": '//div[@aria-label="Post"][@role="button"][@tabindex="0"]',
     "profile_link": '//a[@href="/me/"]',
     "num_of_friends": f'//span[@class="{num_friends_class}"]',
@@ -163,4 +165,4 @@ def changeusername():
     h.ch_username()
 
 
-make_post()
+get_friends()
