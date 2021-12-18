@@ -60,7 +60,6 @@ def get_states(these_users):
 
 get_states(users)
 
-"""
 
 def get_completed_city_links(state_name):
 
@@ -114,3 +113,4 @@ def get_cities_user_pages(state_name):
 
 get_cities_user_pages("California")
 
+"""

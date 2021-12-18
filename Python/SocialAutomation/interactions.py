@@ -18,7 +18,7 @@ import check_errors as ce
 
 chrome_opts = Options()
 
-chrome_opts.add_argument("user-data-dir=selenium")
+chrome_opts.add_argument("user-data-dir=seleniumuser2")
 
 driver = webdriver.Chrome(options=chrome_opts)
 
@@ -31,14 +31,24 @@ def find_these_x(description:str):
 def find_this_xtext(description:str):
     return driver.find_element(By.XPATH, description).text
 
+def find_these_xtext(description:str):
+    els = driver.find_elements(By.XPATH, description)
+    return [el.text for el in els]
+
+def find_these_xhref(description:str):
+    els = driver.find_elements(By.XPATH, description)
+    return [el.get_attribute("href") for el in els]
+
 def find_this_link(description:str):
     return driver.find_element(By.LINK_TEXT, description)
 
 def find_these_links(description:str):
     return driver.find_elements(By.LINK_TEXT, description)
 
-def jsclick(target):
-    driver.execute_script("arguments[0].click();", like)
+
+
+def jsclick(this_target):
+    driver.execute_script("arguments[0].click();", this_target)
     
 def scroll_to_bottom():
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -51,7 +61,7 @@ def login(user):
 
     driver.get(my_vars["home_page"])
 
-    sleep(3)
+    sleep(5)
 
     if not driver.title == my_vars["login_title"]:
 
@@ -69,7 +79,7 @@ def login(user):
 
     log_button.click()
 
-    sleep(3)
+    sleep(5)
 
 
 def click_likes():
@@ -103,8 +113,10 @@ def give_likes(pic_link):
 
     click_likes()
 
+    sleep(1)
 
-def get_pictures_link(site_user):
+
+def get_picture_links(site_user):
 
     try:
 
@@ -113,6 +125,8 @@ def get_pictures_link(site_user):
         sleep(1.0)
 
         ce.login_title(driver)
+
+        return find_these_xhref(my_selectors["picture_link_selector"])
 
     except Exception:
 
@@ -128,29 +142,30 @@ def print_confirmation(site_user):
     print(p1, p2)
 
 
-def like_pictures(state, db_users, this_user, this_query):
+
+def like_pictures(state, db_users, this_user):
 
     liked_pictures = this_user["liked_pictures"]
 
+    this_query = {liked_pictures: False, "active": True,
+              "fatalErr": False}
+ 
     count = 0
 
     these_users = db_users[state].find(this_query)
 
     for user in these_users:
 
+        if user["gender"] == "M" or user["gender"] == "F":
+            continue
+        
         print_confirmation(user)
 
         ce.count_200(driver, count)
 
         count += 1
 
-        get_pictures_link(user)
-
-        picture_link_selector = my_selectors["picture_link_selector"]
-
-        picture_elements = find_these_x(picture_link_selector)
-
-        picture_links = [el.get_attribute("href") for el in picture_elements]
+        picture_links = get_picture_links(user)
 
         if len(picture_links) == 0:
 
@@ -194,11 +209,23 @@ def like_pictures(state, db_users, this_user, this_query):
 
         else:
 
-            print("last post older than 2020, passing")
+            print("LAST POST OLDER THAN 2020, ONLY LIKING THIS PIC")
+
+            scroll_to_bottom()
+            
+            sleep(1)
+
+            click_likes()
+
+            sleep(1)
 
             active_update = {"active": False}
 
             h.update_this(db_users[state], "_id", user["_id"], active_update)
+
+            liked_update = {liked_pictures: True}
+
+            h.update_this(db_users[state], "_id", user["_id"], liked_update)
 
         last_post_update = {"lastPicturePost": year}
 

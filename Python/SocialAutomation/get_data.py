@@ -32,6 +32,7 @@ chrome_opts.add_argument("user-data-dir=seleniumuser2")
 
 driver = webdriver.Chrome(options=chrome_opts)
 
+
 def login(user):
 
     username_in = my_selectors["username_in"]
@@ -64,26 +65,22 @@ def login(user):
 
     sleep(3)
 
+
 def get_state_data():
 
     driver.get(my_vars["us_places"])
 
     state_elements = driver.find_elements(By.XPATH,
-
                                           my_selectors["states_selector"])
 
     state_names = [state_element.text for state_element in state_elements]
 
     state_hrefs = [
-
         state_element.get_attribute("href") for state_element in state_elements
-
     ]
 
     state_city_links = [
-
         state_href + "/" + my_vars["within"] for state_href in state_hrefs
-
     ]
 
     for x in range(len(state_elements)):
@@ -107,11 +104,9 @@ def get_state_data():
         sleep(1)
 
         num_users = driver.find_element(
-
             By.XPATH, my_selectors["num_users_selector"]).text
 
         num_cities = driver.find_element(
-
             By.XPATH, my_selectors["num_cities_selector"]).text
 
         state["totalUsers"] = helpers.extract_numbers(num_users)
@@ -123,23 +118,18 @@ def get_state_data():
         sleep(1)
 
         driver.execute_script(
-
             "window.scrollTo(0, document.body.scrollHeight);")
 
         sleep(1)
 
         city_elements = driver.find_elements(By.XPATH,
-
                                              my_selectors["cities_selector"])
 
         city_names = [city_element.text for city_element in city_elements]
 
         city_links = [
-
             city_element.get_attribute("href")
-
             for city_element in city_elements
-
         ]
 
         state["cityLinks"] = city_links
@@ -154,6 +144,7 @@ def get_state_data():
 
         print(result)
 
+
 def get_completed_city_links(state_name):
 
     this_state = united_states_db[state_name].find_one({"name": state_name})
@@ -161,6 +152,7 @@ def get_completed_city_links(state_name):
     completed_cities = this_state["completedCities"]
 
     return completed_cities
+
 
 def get_cities_user_pages(state_name):
 
@@ -177,12 +169,11 @@ def get_cities_user_pages(state_name):
     user_links = [f'{link}/{my_vars["users"]}' for link in city_links]
 
     user_pages = [
-
         link for link in user_links if not link in completed_city_links
-
     ]
 
     return user_pages
+
 
 def get_city_data(state_name):
 
@@ -201,29 +192,11 @@ def get_city_data(state_name):
         max_pages = 450
 
         number_of_users_text = driver.find_element(
-
             By.XPATH, my_selectors["num_users_selector"]).text
 
         number_of_users = helpers.extract_numbers(number_of_users_text)
 
-        if number_of_users < 100:
-
-            result = united_states_db[state_name].update_one(
-
-                {"name": state_name},
-
-                {"$addToSet": {
-
-                    "completedCities": cities_users
-
-                }})
-
-            print("LESS THAN 100 USERS, PASSING")
-
-            continue
-
         city_name = driver.find_element(
-
             By.XPATH, my_selectors["city_name_selector"]).text
 
         pages_to_scrape = number_of_users / users_per_page
@@ -253,37 +226,28 @@ def get_city_data(state_name):
         result1 = state_collection.insert_one(city)
 
         print(
-
             f"finished inserting {city}, into {state_name} result = {result1}")
 
         result2 = united_states_db[state_name].update_one(
-
             {"name": state_name},
-
             {"$addToSet": {
-
                 "completedCities": cities_users
-
             }})
 
         print(
-
             f"added {city_name} to scraped cities for {state_name}, result = {result2}"
-
         )
+
 
 def scrape_user_page(state_name, city_name):
 
     user_details_elements = driver.find_elements(By.XPATH,
-
                                                  secrets.user_details_selector)
 
     view_picture_elements = driver.find_elements(
-
         By.XPATH, secrets.view_pictures_selector)
 
     username_elements = driver.find_elements(By.XPATH,
-
                                              secrets.user_name_selector)
 
     user_details_text = [el.text for el in user_details_elements]
@@ -297,9 +261,7 @@ def scrape_user_page(state_name, city_name):
     usernames = [el.text for el in username_elements]
 
     user_ids = [
-
         helpers.delete_not_numbers(text) for text in user_profile_links
-
     ]
 
     user_ages = [helpers.get_age(text) for text in user_details_text]
@@ -307,9 +269,7 @@ def scrape_user_page(state_name, city_name):
     user_genders = [helpers.get_gender(text) for text in user_details_text]
 
     user_styles = [
-
         helpers.get_this_word(text, -1) for text in user_details_text
-
     ]
 
     user_num_pics = [helpers.get_age(text) for text in view_pictures_text]
@@ -364,10 +324,10 @@ def scrape_user_page(state_name, city_name):
 
         print(result)
 
+
 def scrape_city_users(state_name: str):
 
     cities_to_scrape = city_data_db[state_name].find(
-
         {"completedScraping": False})
 
     for city in cities_to_scrape:
@@ -381,7 +341,6 @@ def scrape_city_users(state_name: str):
         if start_page >= end_page:
 
             result = city_data_db[state_name].update_one(
-
                 {"_id": city["_id"]}, {"completedScraping": True})
 
             continue
@@ -397,8 +356,8 @@ def scrape_city_users(state_name: str):
             scrape_user_page(state_name, city["name"])
 
             helpers.increment_data(united_states_db[state_name], "name",
-
                                    city["name"], "scrapedPages", 1)
+
 
 def main():
 
@@ -410,5 +369,5 @@ def main():
 
         get_city_data(state)
 
-main()
 
+main()
