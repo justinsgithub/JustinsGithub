@@ -16,9 +16,9 @@ import helpers as h
 
 import check_errors as ce
 
-chrome_opts = Options()
+chrome_options = Options()
 
-chrome_opts.add_argument("user-data-dir=seleniumuser2")
+chrome_options.add_argument("user-data-dir=seleniumuser2")
 
 driver = webdriver.Chrome(options=chrome_opts)
 

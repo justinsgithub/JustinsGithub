@@ -25,7 +25,7 @@ prefs = {"profile.default_content_setting_values.notifications": 2}
 
 chrome_options.add_experimental_option("prefs", prefs)
 
-chrome_options.add_argument("user-data-dir=selenium")
+chrome_options.add_argument("user-data-dir=seleniumfacebook")
 
 chrome_options.add_argument("--headless")
 
@@ -41,6 +41,8 @@ onyourmind_class2 = (
     "rq0escxv buofh1pr df2bnetk hv4rvrfc dati1w0a l9j0dhe7 k4urcfbm du4w35lb gbhij3x4"
 )
 
+num_friends_class = "d2edcug0 hpfvmrgz qv66sw1b c1et5uql b0tq1wua e9vueds3 j5wam9gi b1v8xokw q66pz984"
+
 constants = {
     "base_url": "https://facebook.com",
     "login_title": "Facebook - Log In or Sign Up",
@@ -54,7 +56,7 @@ xpaths = {
     "input_box": '//div[@style="outline: none; user-select: text; white-space: pre-wrap; overflow-wrap: break-word;"][@role="textbox"][@contenteditable="true"]',
     "post_button": '//div[@aria-label="Post"][@role="button"][@tabindex="0"]',
     "profile_link": '//a[@href="/me/"]',
-    "num_of_friends": '//span[@class="d2edcug0 hpfvmrgz qv66sw1b c1et5uql b0tq1wua e9vueds3 j5wam9gi b1v8xokw q66pz984"]',
+    "num_of_friends": f'//span[@class="{num_friends_class}"]',
 }
 
 
