@@ -1,6 +1,6 @@
 # FaceBooker
 
-## send messages from the command line 
+## send facebook posts from the command line 
 
 ## to get started 
 
