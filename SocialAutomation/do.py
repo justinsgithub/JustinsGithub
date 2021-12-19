@@ -8,6 +8,8 @@ from secrets import my_vars
 
 from getpass import getuser
 
+from bson.objectid import ObjectId
+
 uri = my_vars["uri"]
 
 client = pymongo.MongoClient(uri)
@@ -15,6 +17,13 @@ client = pymongo.MongoClient(uri)
 username = getuser()
 
 app = typer.Typer()
+
+begin = """
+
+"""
+end = """
+
+"""
 
 
 @app.command()
@@ -36,17 +45,11 @@ def countCityData():
 
     average_cities_per_state = int(data_count / number_of_states)
 
-    spacestart  = """
-    
-    """
-    spaceend  = """
-    
-    """
-    output1 = f"          we have data for {data_count} cities for an "
+    output1 = f"          we have data for {data_count} cities and {len(collection_names)} states for an "
 
     output2 = f"average {average_cities_per_state} cities per state"
 
-    output = spacestart + output1 + output2 + spaceend
+    output = begin + output1 + output2 + end
 
     typer.secho(output, fg="green")
 
@@ -87,9 +90,7 @@ def update(db_name, collection_name, query_key, query_value, new_key, new_value)
     collection = db[collection_name]
 
     result = collection.update_one(
-
         {query_key: query_value}, {"$set": {new_key: new_value}}
-
     )
 
     typer.secho(f"inserted new data, result object = {result}", fg="green")
@@ -132,25 +133,93 @@ def databases(col: bool = False):
 
 
 @app.command()
-def collections(database_name, col: bool = False):
+def countdocs(collection_name: str = "", dbname: str = "users", getall: bool = False):
+    db = client[dbname]
+    count = 0
+    if getall:
+        collection_names = db.list_collection_names()
+        for collection_name in collection_names:
 
-    database_list = client.list_database_names()
+            collection = db[collection_name]
 
-    db_collections = client[database_name].list_collection_names()
+            count += collection.count_documents({})
+
+        message = f"{begin}           {count} total documents in {dbname} database{end}"
+
+        typer.secho(message, fg="green")
+
+        return
+
+    if dbname and getall:
+        db = client[dbname]
+
+        collection_names = db.list_collection_names()
+
+        for collection_name in collection_names:
+
+            collection = db[collection_name]
+
+            count += collection.count_documents({})
+
+        message = f"{begin}           {count} total documents in {dbname} database{end}"
+
+        typer.secho(message, fg="green")
+
+        return
+
+    collection_names = db.list_collection_names()
+    
+    collection = db[collection_names[0]]
+      
+    count += collection.count_documents({})
+
+    message = f"{begin}           {count} total documents in {collection_names[0]} collection from {dbname} database{end}"
+
+    typer.secho(message, fg="green")
+
+    return
+
+
+@app.command()
+def findstate(
+    state_name: str,
+    many: bool = False,
+    col: bool = False,
+    fatalerr: bool = False,
+    likedpics: str = "",
+    oid: str = "",
+):
+    db = client["users"]
+
+    if likedpics:
+        results = db[state_name].find({"state": state_name, likedpics: True})
+
+    if oid:
+        results = db[state_name].find({"state": state_name, "_id": ObjectId(oid)})
+
+    if many:
+        results = db[state_name].find({"state": state_name})
+        for result in results:
+            typer.secho(result, fg="green")
+            return
+
+    if fatalerr:
+        result = db[state_name].find_one({"state": state_name, "fatalErr": True})
+        typer.secho(result, fg="green")
+        return
+
+    result = db[state_name].find_one({"state": state_name})
+    typer.secho(result, fg="green")
+
+
+@app.command()
+def collections(col: bool = False):
+
+    db_collections = client["users"].list_collection_names()
 
     count = len(db_collections)
 
-    greet = f"here are your {count} {database_name} collections {username}"
-
-    if not database_name in database_list:
-
-        typer.secho("invalid database name, here are your options", fg="red")
-
-        for database in database_list:
-
-            typer.secho(database, fg="green")
-
-        return
+    greet = f"here are your {count} scraped data collections {username}"
 
     if col:
 

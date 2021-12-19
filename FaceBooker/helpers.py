@@ -9,12 +9,12 @@ from time import sleep
 """
 
 def get_fb_id(link:str):
-    this_id = re.sub("https://www.facebook.com/", "", link)
-    this_id = re.sub("/friends_mutual", "", this_id)
+    this_id = re.sub(r"https://www.facebook.com/", "", link)
+    this_id = re.sub(r"/friends_mutual", "", this_id)
     return this_id.strip()
     
 def get_friends_mutual(link:str):
-    id_plus_mutual = re.sub("https://www.facebook.com/", "", link)
+    id_plus_mutual = re.sub(r"https://www.facebook.com/", "", link)
     return id_plus_mutual.strip()
     
 def delete_whitespace(my_strings: str):
