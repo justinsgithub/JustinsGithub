@@ -18,6 +18,11 @@ import check_errors as ce
 
 chrome_options = Options()
 
+prefs = {"profile.default_content_setting_values.notifications": 2}
+
+chrome_options.add_experimental_option("prefs", prefs)
+
+
 chrome_options.add_argument("user-data-dir=seleniumuser2")
 
 driver = webdriver.Chrome(options=chrome_options)
