@@ -1,7 +1,7 @@
 #!/bin/python3
-'''
+"""
 testing functions before using in main 
-'''
+"""
 
 
 import os
@@ -24,6 +24,8 @@ import datetime
 
 import typer
 
+app = typer.Typer()
+
 chrome_options = Options()
 
 prefs = {"profile.default_content_setting_values.notifications": 2}
@@ -31,12 +33,6 @@ prefs = {"profile.default_content_setting_values.notifications": 2}
 chrome_options.add_experimental_option("prefs", prefs)
 
 chrome_options.add_argument("user-data-dir=seleniumfacebook")
-
-# chrome_options.add_argument("--headless")
-
-driver = webdriver.Chrome(options=chrome_options)
-
-driver.maximize_window()
 
 username = getuser()
 
@@ -74,8 +70,33 @@ xpaths = {
 }
 
 
-def login():
+@app.command()
+def changepassword(
+    password: str = typer.Option(
+        ..., prompt=True, confirmation_prompt=True, hide_input=True
+    )
+):
 
+    with open("secrets/password", "w") as file:
+
+        file.write(password)
+
+    typer.secho(f"{begin}     password updated{end}", fg="green")
+
+
+@app.command()
+def changeusername(
+    username: str = typer.Option(..., prompt=True, confirmation_prompt=True)
+):
+
+    with open("secrets/username", "w") as file:
+
+        file.write(username)
+
+    typer.secho(f"{begin}     username updated{end}", fg="green")
+
+
+def login():
     if not os.path.isdir("secrets"):
 
         message = f"{begin}       Welcome to your FaceBooker{end}"
@@ -84,13 +105,27 @@ def login():
 
         os.mkdir("secrets")
 
-    if not os.path.isfile("secrets/username"):
+        message2 = "       be sure to run changeusername and changepassword"
 
-        h.ch_username()
+        typer.secho(f"{begin}message{end}", fg="green")
+
+    if not os.path.isfile("secrets/username"):
+        message = "    no username found, run command changeusername to add"
+
+        typer.secho(f"{begin}{message}{end}", fg="red")
+
+        return
 
     if not os.path.isfile("secrets/password"):
+        message = "    no password found, run command changepassword to add"
 
-        h.ch_password()
+        typer.secho(f"{begin}{message}{end}", fg="red")
+
+        return
+
+    driver = webdriver.Chrome(options=chrome_options)
+
+    driver.maximize_window()
 
     driver.get(constants["base_url"])
 
@@ -112,16 +147,32 @@ def login():
         password_input.send_keys(password)
         sleep(1)
         login_button.click()
+        sleep(1)
+
+    return driver
 
 
-def get_num_friends():
+@app.command()
+def getnumfriends(gui: bool = False):
+
+    if not gui:
+
+        chrome_options.add_argument("--headless")
+
+    driver = login()
+
     sleep(1)
+
     driver.get(f"{constants['base_url']}/me/")
+
     sleep(1)
+
     my_profile_link = driver.current_url
 
     if not os.path.isfile("secrets/myprofilelink"):
+
         with open("secrets/myprofilelink", "w") as file:
+
             file.write(my_profile_link)
 
     driver.get(f"{my_profile_link}friends")
@@ -131,6 +182,7 @@ def get_num_friends():
     num_friends = int(num_of_friends.strip())
 
     with open("secrets/currentfriendcount", "w") as file:
+
         file.write(str(num_friends))
 
     current_date = datetime.datetime.now()
@@ -140,14 +192,42 @@ def get_num_friends():
     friend_history = f"{formatted_date} {str(num_of_friends)}\n"
 
     with open("secrets/runningfriendcount", "a") as file:
+
         file.write(friend_history)
 
     driver.get(constants["base_url"])
-    return num_friends
+
+    driver.quit()
+
+    message = f"recorded number of friends ({num_of_friends}) to current and history"
+
+    typer.secho(message, fg="green")
+
+    driver.quit()
 
 
-def get_friends_list():
-    friend_count = get_friends()
+@app.command()
+def getfriendslist(gui: bool = False):
+
+    if not gui:
+
+        chrome_options.add_argument("--headless")
+
+    driver = login()
+
+    driver.get(f"{constants['base_url']}/me/")
+
+    sleep(1)
+
+    my_profile_link = driver.current_url
+
+    if not os.path.isfile("secrets/myprofilelink"):
+
+        with open("secrets/myprofilelink", "w") as file:
+
+            file.write(my_profile_link)
+
+    driver.get(f"{my_profile_link}friends")
 
     h.scroll_to_bottom(driver)
 
@@ -158,74 +238,133 @@ def get_friends_list():
     last_friend_elements = []
 
     while not len(friend_elements) == len(last_friend_elements):
+
         last_friend_elements = friend_elements
+
         h.scroll_to_bottom(driver)
+
         sleep(10)
+
         friend_elements = h.find_these_x(driver, xpaths["friend_links"])
+
         m1 = f"{begin}         found {len(friend_elements)} friend links so far{end}"
+
         m2 = f'{begin}         last list last element = {last_friend_elements[len(last_friend_elements) - 1].get_attribute("href")}{end}'
+
         m3 = f"{begin}         current list last element = {friend_elements[len(friend_elements) - 1].get_attribute('href')}{end}"
+
         typer.secho(m1, fg="green")
+
         typer.secho(m2, fg="red")
+
         typer.secho(m3, fg="blue")
 
     if not os.path.isdir("secrets/friends"):
+
         os.mkdir("secrets/friends")
 
     for friend_element in friend_elements:
+
         link = friend_element.get_attribute("href")
 
         friend_id = h.get_fb_id(link)
+
         typer.secho(f"{begin}friend id: {friend_id}{end}")
+
         typer.secho(f"{begin}friend link: {link}{end}")
+
         compare_this = f'{constants["base_url"]}/{friend_id}/friends_mutual'
 
         typer.secho(f"is {compare_this} == {link}? {compare_this == link}")
+
         if compare_this == link:
 
             friend_path = f"secrets/friends/{friend_id}"
 
             if not os.path.isdir(friend_path):
+
                 os.mkdir(friend_path)
 
     confirm_complete = f'{begin}"        COMPLETED GETTING FRIENDS LIST"{end}'
+
     typer.secho(confirm_complete, fg="green")
 
+    driver.quit()
 
-def count_friends_names():
+
+@app.command()
+def countfriends(names: bool = False):
+
+    if names:
+
+        name_count = 0
+
+        for friend_id in friend_ids:
+
+            if os.path.isfile(f"secrets/friends/{friend_id}/name"):
+
+                name_count += 1
+
+        message = f"found {name_count} names for {len(friend_ids)} friends"
+
+        typer.secho(message, fg="green")
+
+        return
+
     friend_ids = os.listdir("secrets/friends")
-    name_count = 0
-    for friend_id in friend_ids:
-        if os.path.isfile(f"secrets/friends/{friend_id}/name"):
-            name_count += 1
 
-    typer.secho(f"found {name_count} names for {len(friend_ids)} friends")
+    typer.secho(f"found {len(friend_ids)} friend ids", fg="green")
 
 
-def get_friends_names():
+@app.command()
+def getfriendsnames(gui: bool = False):
+
+    if not gui:
+
+        chrome_options.add_argument("--headless")
+
+    driver = login()
+
     friend_ids = os.listdir("secrets/friends")
+
     for friend_id in friend_ids:
+
         if not os.path.isfile(f"secrets/friends/{friend_id}/name"):
+
             driver.get(f"{constants['base_url']}/{friend_id}")
+
             sleep(2)
+
             headers = driver.find_elements(By.XPATH, "//h1")
+
             if headers:
+
                 friend_name = headers[len(headers) - 1].text
 
                 typer.secho(f"{begin}    friend name is {friend_name}{end}", fg="green")
+
                 name_file = f"secrets/friends/{friend_id}/name"
+
                 if not os.path.isfile(name_file):
+
                     with open(name_file, "w") as file:
+
                         file.write(friend_name)
 
-    driver.get(constants["base_url"])
+    confirm_complete = f'{begin}"        COMPLETED GETTING FRIENDS NAMES"{end}'
+
+    typer.secho(confirm_complete, fg="green")
+
+    driver.quit()
 
 
-def make_post():
-    
-    get_num_friends()
+@app.command()
+def post(gui: bool = False):
 
-    sleep(1)
+    if not gui:
+        chrome_options.add_argument("--headless")
+
+    driver = login()
 
     onyourmind = h.find_this_x(driver, xpaths["onyourmind"])
 
@@ -235,7 +374,9 @@ def make_post():
 
     inputbox = driver.find_element(By.XPATH, xpaths["input_box"])
 
-    post_message = typer.prompt("What message would you like to post?")
+    message = f"{begin}    What message would you like to post?{end}"
+
+    post_message = typer.prompt(message)
 
     inputbox.send_keys(post_message)
 
@@ -245,15 +386,9 @@ def make_post():
 
     post_button.click()
 
-
-def changepassword():
-
-    h.ch_password()
+    driver.quit()
 
 
-def changeusername():
+if __name__ == "__main__":
 
-    h.ch_username()
-
-
-make_post()
+    app()
