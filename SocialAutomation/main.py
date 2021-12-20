@@ -20,7 +20,9 @@ i.login(user2)
 
 # these_states = ["Missouri", "Massachusetts","Wisconsin", "West Virginia", "Virginia", "Vermont"]
 
-these_states = ["Tennessee", "Massachusetts", "Wisconsin"]
+these_states = [
+    "Washington", "New York", "New Jersey", "Tennessee", "Wisconsin"
+]
 
 for state in these_states:
 

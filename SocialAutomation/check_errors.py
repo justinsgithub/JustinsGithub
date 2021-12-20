@@ -1,22 +1,36 @@
 from secrets import my_vars
 
+
 def login_title(wdriver):
 
     if wdriver.title == my_vars["login_title"]:
 
         wdriver.quit()
 
-        quit()   
+        quit()
 
-def count_200(wdriver, count):
 
-    if count >= 200:
+def count_400(wdriver, count):
 
-        print("HIT 200 QUITTING NOW")
+    if count >= 400:
+
+        print(f"HIT {count} QUITTING NOW")
 
         wdriver.quit()
 
         quit()
+
+
+def count_300(wdriver, count):
+
+    if count >= 300:
+
+        print(f"HIT {count} QUITTING NOW")
+
+        wdriver.quit()
+
+        quit()
+
 
 def unknown_err(wdriver):
 
@@ -25,4 +39,3 @@ def unknown_err(wdriver):
     wdriver.quit()
 
     quit()
-

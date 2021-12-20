@@ -18,11 +18,6 @@ import check_errors as ce
 
 chrome_options = Options()
 
-prefs = {"profile.default_content_setting_values.notifications": 2}
-
-chrome_options.add_experimental_option("prefs", prefs)
-
-
 chrome_options.add_argument("user-data-dir=seleniumuser2")
 
 driver = webdriver.Chrome(options=chrome_options)
@@ -152,7 +147,12 @@ def like_pictures(state, db_users, this_user):
 
     liked_pictures = this_user["liked_pictures"]
 
-    this_query = {liked_pictures: False, "active": True, "fatalErr": False}
+    this_query = {
+        liked_pictures: False,
+        "active": True,
+        "fatalErr": False,
+        "isMale": True
+    }
 
     count = 0
 
@@ -160,12 +160,9 @@ def like_pictures(state, db_users, this_user):
 
     for user in these_users:
 
-        if user["gender"] == "M" or user["gender"] == "F":
-            continue
-
         print_confirmation(user)
 
-        ce.count_200(driver, count)
+        ce.count_400(driver, count)
 
         count += 1
 
