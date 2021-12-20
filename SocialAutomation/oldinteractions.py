@@ -2,8 +2,6 @@ import re
 
 from time import sleep
 
-from pyvirtualdisplay import Display
-
 from selenium import webdriver
 
 from selenium.common import exceptions
@@ -17,20 +15,12 @@ from secrets import my_vars, my_selectors, base_url, user1, user2
 import helpers as h
 
 import check_errors as ce
-display = Display(visible=0, size=(800, 600))
-display.start()
-options = webdriver.ChromeOptions()
-options.add_argument('--no-sandbox')
-options = webdriver.ChromeOptions()
-options.add_argument('--disable-extensions')
-options.add_argument('--headless')
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument("user-data-dir=seleniumuser2")
-driver = webdriver.Chrome(chrome_options=options)
 
+chrome_options = Options()
 
+chrome_options.add_argument("user-data-dir=seleniumuser2")
+
+driver = webdriver.Chrome(options=chrome_options)
 
 
 def find_this_x(description: str):

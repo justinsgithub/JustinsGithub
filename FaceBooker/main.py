@@ -151,6 +151,12 @@ def login():
 
     return driver
 
+@app.command()
+def getfriendlocations():
+    friend_ids = "secrets/friends"
+    driver = login()
+
+    
 
 @app.command()
 def getnumfriends(gui: bool = False):
