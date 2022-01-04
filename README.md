@@ -2,7 +2,7 @@
 
 
 - 🔭 I’m currently working on landing a job or internship in the tech industry
-- 🌱 I’m currently focused on learning everything to do with Python
+- 🌱 I’m currently focused on learning to understand data structures and algorithms better
 - 📫 How to reach me: [LinkedIn](https://www.linkedin.com/in/justinaawd) or justinaawd@gmail.com
 
 <!--
